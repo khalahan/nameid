@@ -17,20 +17,40 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-/* Configuration variables are set here.  This file needs to be updated
-   when setting up the identity provider on a server accordingly.  */
+/* Code for writing HTML output.  */
 
-/* Path to the namecoind binary (or rather, command prefix to be used for
-   executing RPC commands).  */
-$namecoind = "/usr/local/bin/namecoind-qt -conf=/home/daniel/.namecoin/bitcoin.conf";
+/**
+ * Manage writing of HTML.
+ */
+class HtmlOutput
+{
 
-/* Namespace used for name lookups.  */
-$namePrefix = "id";
+  /**
+   * Construct.
+   */
+  public function __construct ()
+  {
+    // Nothing to be done.
+  }
 
-/* Name to use for session.  */
-$sessionName = "nameid_login";
+  /**
+   * Close at the end.
+   */
+  public function close ()
+  {
+    // Nothing to be done.
+  }
 
-/* URL of the server running this NameID instance.  */
-$serverUri = "http://localhost:8080/nameid/";
+  /**
+   * Escape a string for HTML.
+   * @param str The string as literal text.
+   * @return HTML version with entities escaped.
+   */
+  public function escape ($str)
+  {
+    return htmlentities ($str, ENT_QUOTES, "utf-8");
+  }
+
+}
 
 ?>
