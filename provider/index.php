@@ -49,6 +49,10 @@ if ($req->check ("name"))
       }
   }
 
+// Nothing else.
+if ($status === "unknown")
+  $status = "default";
+
 // Clean up.  Only the HtmlOutput is kept until the very end.
 $req->close ();
 $nc->close ();
@@ -90,62 +94,8 @@ echo "<?xml version='1.0' encoding='utf-8' ?>\n";
 <h1><?php echo $html->escape ($pageTitle); ?></h1>
 
 <?php
-switch ($status)
-  {
-  case "identityPage":
-    $displayInfo = array ("name" => "Real Name",
-                          "nick" => "Nickname",
-                          "website" => "Website",
-                          "email" => "Email Address",
-                          "xmpp" => "XMPP",
-                          "bitcoin" => "Bitcoin Address",
-                          "namecoin" => "Namecoin Address",
-                          "litecoin" => "Litecoin Address",
-                          "ppcoin" => "PPCoin Address");
-    if ($identityPage)
-      {
-        echo "<dl>\n";
-        foreach ($displayInfo as $key => $label)
-          {
-            if (isset ($identityPage->$key))
-              {
-                echo "<dt>" . $html->escape ($label) . "</dt>\n";
-                echo "<dd>";
-                switch ($key)
-                  {
-                  case "website":
-                    $href = $identityPage->$key;
-                    break;
-                  case "email":
-                    $href = "mailto:" . $identityPage->$key;
-                    break;
-                  default:
-                    $href = NULL;
-                    break;
-                  }
-                if ($href)
-                  echo "<a href='" . $html->escape ($href) . "'>";
-                echo $html->escape ($identityPage->$key);
-                if ($href)
-                  echo "</a>";
-                echo "</dd>\n";
-              }
-          }
-        echo "</dl>\n";
-      }
-    else
-      echo "<p>There's no public information for this profile.</p>\n";
-
-    break;
-
-  case "identityNotFound":
-    echo "<p>The name " . $html->escape ("$namePrefix/$identityName")
-         . " is not yet registered.</p>\n";
-    break;
-
-  default:
-    echo "<p>I don't know what to do.</p>\n";
-  }
+$fromIndex = "yes";
+include ("pages/$status.php");
 ?>
 
 </body>
