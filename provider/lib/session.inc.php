@@ -75,6 +75,36 @@ class Session
       unset ($_SESSION["loggedIn"]);
   }
 
+  /**
+   * Generate a fresh login nonce and store it in the session.
+   * @return The generated nonce.
+   */
+  public function generateNonce ()
+  {
+    global $nonceBytes;
+
+    $bin = openssl_random_pseudo_bytes ($nonceBytes);
+    $str = base64_encode ($bin);
+
+    $_SESSION["loginNonce"] = $str;
+    return $str;
+  }
+
+  /**
+   * Get currently stored login nonce or NULL if none.
+   * @return The stored nonce.
+   */
+  public function getNonce ()
+  {
+    if (!isset ($_SESSION["loginNonce"]))
+      return NULL;
+    $val = $_SESSION["loginNonce"];
+    if (!is_string ($val))
+      return NULL;
+
+    return $val;
+  }
+
 }
 
 ?>

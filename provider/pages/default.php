@@ -24,4 +24,5 @@ if (!isset ($fromIndex) || $fromIndex !== "yes")
 
 ?>
 
-<p>This is the default view.</p>
+<p>This is the default view.  Here we can explain what NameID
+is all about.</p>

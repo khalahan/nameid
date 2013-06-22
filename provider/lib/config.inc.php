@@ -33,4 +33,7 @@ $sessionName = "nameid_login";
 /* URL of the server running this NameID instance.  */
 $serverUri = "http://localhost:8080/nameid/";
 
+/* Number of random bytes to use for the nonce.  */
+$nonceBytes = 16;
+
 ?>

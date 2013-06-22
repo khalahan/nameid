@@ -1,4 +1,3 @@
-<?php
 /*
     NameID, a namecoin based OpenID identity provider.
     Copyright (C) 2013 by Daniel Kraft <d@domob.eu>
@@ -17,13 +16,18 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-/* Page layout to show if the name is not registered.  */
+/* CSS styling.  */
 
-if (!isset ($fromIndex) || $fromIndex !== "yes")
-  die ("Invalid page load.\n");
+.messages li
+{
+  color: green;
+}
+.errors li
+{
+  color: red;
+}
 
-?>
-
-<p>The name
-<strong><?php echo $html->escape ("$namePrefix/$identityName"); ?></strong>
-is not yet registered.  Hurry up!</p>
+textarea
+{
+  width: 50em;
+}

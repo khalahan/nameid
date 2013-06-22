@@ -17,13 +17,23 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-/* Page layout to show if the name is not registered.  */
+/* Page layout when the user is logged in.  */
 
 if (!isset ($fromIndex) || $fromIndex !== "yes")
   die ("Invalid page load.\n");
 
+$fullId = "$namePrefix/$loggedInUser";
+$idUrl = "$serverUri?name=" . urlencode ($loggedInUser);
+
 ?>
 
-<p>The name
-<strong><?php echo $html->escape ("$namePrefix/$identityName"); ?></strong>
-is not yet registered.  Hurry up!</p>
+<p>You are currently logged in as
+<strong><?php echo $html->escape ($fullId); ?></strong>.
+Your identity URL:</p>
+<p><a href="<?php echo $html->escape ($idUrl); ?>"><?php
+  echo $html->escape ($idUrl);
+?></a></p>
+
+<form method="post" action="?action=logout&amp;view=login">
+  <p><button type="submit">Log Out</button></p>
+</form>
