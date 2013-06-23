@@ -17,26 +17,26 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-/* Configuration variables are set here.  This file needs to be updated
-   when setting up the identity provider on a server accordingly.  */
+/* Page layout asking a logged in user to confirm trust in the
+   requesting page.  */
 
-/* Path to the namecoind binary (or rather, command prefix to be used for
-   executing RPC commands).  */
-$namecoind = "/usr/local/bin/namecoind-qt -conf=/home/daniel/.namecoin/bitcoin.conf";
+if (!isset ($fromIndex) || $fromIndex !== "yes")
+  die ("Invalid page load.\n");
 
-/* Namespace used for name lookups.  */
-$namePrefix = "id";
-
-/* Name to use for session.  */
-$sessionName = "nameid_login";
-
-/* URL of the server running this NameID instance.  */
-$serverUri = "http://localhost:8080/nameid/";
-
-/* Number of random bytes to use for the nonce.  */
-$nonceBytes = 16;
-
-/* Storage directory for OpenID data.  */
-$openidStorageDir = "/tmp/nameid";
+$fullId = "$namePrefix/$loggedInUser";
 
 ?>
+
+<p>You are currently logged in as
+<strong><?php echo $html->escape ($fullId); ?></strong>.
+Should we confirm your identity to the requesting page below?</p>
+<p><a href="<?php echo $html->escape ($trustRoot); ?>"><?php
+  echo $html->escape ($trustRoot);
+?></a></p>
+
+<form method="post" action="?action=trust">
+  <p>
+    <button type="submit" name="trust">Yes</button>
+    <button type="submit" name="notrust">No</button>
+  </p>
+</form>

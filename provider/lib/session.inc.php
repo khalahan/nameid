@@ -105,6 +105,30 @@ class Session
     return $val;
   }
 
+  /**
+   * Set the OpenID request info.
+   * @param info Info to set or NULL if we want to clear it.
+   */
+  public function setRequestInfo ($info)
+  {
+    if ($info)
+      $_SESSION["openIdRequestInfo"] = serialize ($info);
+    else
+      unset ($_SESSION["openIdRequestInfo"]);
+  }
+
+  /**
+   * Get stored OpenID request info.
+   * @return Stored info or NULL if no info is present.
+   */
+  public function getRequestInfo ()
+  {
+    if (!isset ($_SESSION["openIdRequestInfo"]))
+      return NULL;
+
+    return unserialize ($_SESSION["openIdRequestInfo"]);
+  }
+
 }
 
 ?>

@@ -72,6 +72,16 @@ class RequestHandler
     return $res;
   }
 
+  /**
+   * Query for a named button click.
+   * @param key The key.
+   * @return True if the button with that name submitted the form.
+   */
+  public function getSubmitButton ($key)
+  {
+    return $this->check ($key);
+  }
+
 }
 
 ?>

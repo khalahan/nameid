@@ -39,7 +39,10 @@ message:</label></p>
 <p><label for="signature">Put the signature below:</label></p>
 <textarea name="signature" id="signature"></textarea>
 
-<p><button type="submit">Sign In</button></p>
+<p>
+  <button type="submit" name="login">Sign In</button>
+  <button type="submit" name="cancel">Cancel</button>
+</p>
 
 </form>
 
