@@ -91,6 +91,12 @@ class OpenID
             else
               return $request;
           }
+        else if (!$request->identity)
+          {
+            /* If we get a request without asking for an identity,
+               cancel it immediately.  */
+            $this->cancel ();
+          }
         else if ($request->immediate)
           $resp = $request->answer (false);
         else
