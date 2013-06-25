@@ -104,7 +104,7 @@ interesting project and want to help the community make best use of it,
 but if you like it, I
 <a href="http://www.domob.eu/donate.php">welcome any donations</a>:</p>
 <blockquote>
-BTC: 1<strong>Nameid</strong>3brhZrbTN1M7t6afMAfVBiGioJT
+BTC: 1<strong>Nameid</strong>3brhZrbTN1M7t6afMAfVBiGioJT<br />
 NMC: NFUJUGVzjTuef8bX7dd3BfXekfu8cdzkuH
 </blockquote>
 
