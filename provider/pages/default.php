@@ -66,6 +66,16 @@ website using <strong>http://nameid.org/</strong> as your identity
 provider.  If you don't yet have a name,
 <a href="https://dot-bit.org/">get yourself one</a>!</p>
 
+<p>You can also use this site to view (some) information associated
+to namecoin IDs.  For instance <a href="?name=domob">mine</a>, or use
+the form to query for an arbitrary identity page:</p>
+<form method="get" action="">
+  <p>
+    <label for="name">id/</label><input type="text" name="name" id="name" />
+   <button type="submit">Query</button>
+  </p>
+</form>
+
 <p>NameID is <strong>free software</strong>,
 <a href="https://www.gitorious.org/nameid">check out the code</a> if
 you are interested.</p>
