@@ -24,27 +24,36 @@ if (!isset ($fromIndex) || $fromIndex !== "yes")
 
 ?>
 
-<form method="post" action="?action=login&amp;view=login">
+<form id="loginForm" method="post" action="?action=login&amp;view=login">
 
 <p><label for="identity">Identity:</label>
   <?php echo $html->escape ($namePrefix); ?>/
   <input type="text" name="identity" id="identity" />
 </p>
 
-<p><label for="message">Please use <kbd>namecoind signmessage</kbd> with the
-address corresponding to your identity to sign the following
-message:</label></p>
-<textarea id="message" readonly="readonly">Enter your ID to see the message to sign.</textarea>
+<div class="hideWithAddon">
+  <p><label for="message">Please use <kbd>namecoind signmessage</kbd> with the
+  address corresponding to your identity to sign the following
+  message:</label></p>
+  <textarea id="message" readonly="readonly">Enter your ID to see the message to sign.</textarea>
 
-<p><label for="signature">Put the signature below:</label></p>
-<textarea name="signature" id="signature"></textarea>
+  <p><label for="signature">Put the signature below:</label></p>
+  <textarea name="signature" id="signature"></textarea>
+</div>
 
 <p>
   <button type="submit" name="login">Sign In</button>
-  <button type="submit" name="cancel">Cancel</button>
+  <button type="submit" name="cancel" id="cancel">Cancel</button>
 </p>
 
 </form>
+
+<!-- Store values for constructing the challenge here for the
+     NameID addon.  -->
+<div class="hidden">
+  <span id="nameid-nonce"><?php echo $html->escape ($loginNonce); ?></span>
+  <span id="nameid-uri"><?php echo $html->escape ($serverUri); ?></span>
+</div>
 
 <!-- ======================================================================= -->
 
@@ -78,6 +87,6 @@ function setup (evt)
 window.addEventListener ("load", setup);
 
 </script>
-<noscript>Since you have JavaScript disabled, you will have to construct
-the message to sign on your own.  Good luck with that!
+<noscript class="hideWithAddon">Since you have JavaScript disabled, you will
+have to construct the message to sign on your own.  Good luck with that!
 The nonce is: <?php echo $html->escape ($loginNonce); ?></noscript>

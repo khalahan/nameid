@@ -31,3 +31,14 @@ textarea
 {
   width: 50em;
 }
+
+.hidden
+{
+  display: none;
+}
+
+/* Hide certain parts of the page when the addon is there.  */
+.withAddon .hideWithAddon
+{
+  display: none;
+}
