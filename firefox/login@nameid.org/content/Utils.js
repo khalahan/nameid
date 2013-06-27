@@ -39,5 +39,8 @@ function log (msg)
 function assert (cond)
 {
   if (!cond)
-    throw "Assertion failed!";
+    {
+      Components.utils.reportError ("Assertion failure.");
+      throw "Assertion failure.";
+    }
 }
