@@ -29,7 +29,8 @@ var EXPORTED_SYMBOLS = ["log", "assert"];
  */
 function log (msg)
 {
-  Services.console.logStringMessage (msg);
+  //Services.console.logStringMessage (msg);
+  dump (msg + "\n");
 }
 
 /**

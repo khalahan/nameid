@@ -18,6 +18,7 @@
 
 /* Main driver object for the addon.  */
 
+Components.utils.import ("chrome://nameid-login/content/Namecoind.js");
 Components.utils.import ("chrome://nameid-login/content/Utils.js");
 Components.utils.import ("resource://gre/modules/Services.jsm");
 
@@ -133,6 +134,16 @@ NameIdAddon.prototype =
       var msg = this.getChallenge (id);
       log ("Attempting to sign challenge: " + msg);
 
+      try
+        {
+          var nc = new Namecoind ("localhost", "8336", "daniel", "password");
+          nc.requestHTTP ("");
+          nc.close ();
+        }
+      catch (error)
+        {
+          Services.prompt.alert (null, "NameID Connection Error", error);
+        }
       /* TODO: Implement real signing and update form data.  */
     },
 
