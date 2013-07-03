@@ -91,11 +91,9 @@ NameIdAddon.prototype =
       var text = "The page at '" + doc.URL + "' contains a NameID"
                  + " login form.  Do you want to permit it to automatically"
                  + " sign challenge messages for you?";
-      /* XXX: enable this after debugging!
       var ok = Services.prompt.confirm (null, "Allow NameID?", text);
       if (!ok)
         return;
-      */
 
       this.nonce = nonceEl.textContent;
       this.uri = uriEl.textContent;
@@ -113,7 +111,11 @@ NameIdAddon.prototype =
       function handlerSubmit (e)
         {
           if (!me.cancelClicked)
-            me.interceptSubmit (doc);
+            {
+              var submit = me.interceptSubmit (doc);
+              if (!submit)
+                e.preventDefault ();
+            }
         }
       function handlerCancel (e)
         {
@@ -126,6 +128,7 @@ NameIdAddon.prototype =
     /**
      * Intercept the form submit.
      * @param doc The document we're on.
+     * @return False in case we want to abort the submission.
      */
     interceptSubmit: function (doc)
     {
@@ -134,17 +137,76 @@ NameIdAddon.prototype =
       var msg = this.getChallenge (id);
       log ("Attempting to sign challenge: " + msg);
 
+      /* Custom error handler that understands some error codes.  */
+      function errHandler (err)
+        {
+          switch (err.code)
+            {
+            case -4:
+              throw "The specified name 'id/" + id + "' is not registered.";
+
+            case -14:
+              throw "The provided passphrase is incorrect.";
+
+            default:
+              break;
+            }
+
+          return false;
+        }
+
       try
         {
           var nc = new Namecoind ("localhost", "8336", "daniel", "password");
-          nc.requestHTTP ("");
+
+
+          var res = nc.executeRPC ("name_show", ["id/" + id], errHandler);
+          var addr = res.address;
+          log ("Found address for name 'id/" + id + "': " + addr);
+
+          res = nc.executeRPC ("validateaddress", [addr]);
+          if (!res.ismine)
+            throw "You don't own the private key for 'id/" + id + "'.";
+
+          res = nc.executeRPC ("getinfo", []);
+          var didUnlock = false;
+          if (res.unlocked_until !== undefined && res.unlocked_until === 0)
+            {
+              var title = "Unlock Namecoin Wallet";
+              var text = "Please provide the password to temporarily unlock"
+                         + " your namecoin wallet:";
+
+              var pwd = {};
+              var btn = Services.prompt.promptPassword (null, title, text, pwd, 
+                                                        null, {});
+              /* Abort if cancel was clicked.  */
+              if (!btn)
+                {
+                  log ("Wallet unlock cancelled by user.");
+                  nc.close ();
+                  return false;
+                }
+
+              nc.executeRPC ("walletpassphrase", [pwd.value, 10], errHandler);
+              didUnlock = true;
+            }
+
+          var signature = nc.executeRPC ("signmessage", [addr, msg]);
+          doc.getElementById ("signature").value = signature;
+          log ("Successfully provided signature.");
+
+          if (didUnlock)
+            nc.executeRPC ("walletlock", []);
+
           nc.close ();
         }
-      catch (error)
+      catch (err)
         {
-          Services.prompt.alert (null, "NameID Connection Error", error);
+          Services.prompt.alert (null, "NameID Connection Error", err);
+          return false;
         }
-      /* TODO: Implement real signing and update form data.  */
+
+      return true;
     },
 
     /**

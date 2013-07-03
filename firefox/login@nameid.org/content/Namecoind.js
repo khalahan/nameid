@@ -31,6 +31,10 @@ function Namecoind (host, port, user, pass)
   this.url = "http://" + host + ":" + port;
   this.user = user;
   this.pass = pass;
+
+  /* Increment ID always to ensure we get matching responses to all
+     requests sent.  */
+  this.nextID = 1;
 }
 
 Namecoind.prototype =
@@ -45,6 +49,41 @@ Namecoind.prototype =
     },
 
     /**
+     * Call an RPC method.  If an error occurs, this method throws.
+     * @param method The method to call.
+     * @param args The arguments to pass it as array.
+     * @param errHandler If given, call this method in cases of errors
+     *                   reported from the RPC call instead of throwing.
+     * @return The result in case of success.
+     */
+    executeRPC: function (method, args, errHandler)
+    {
+      var id = this.nextID++;
+      var jsonData =
+        {
+          method: method,
+          params: args,
+          id: id
+        };
+      var resString = this.requestHTTP (JSON.stringify (jsonData));
+      var res = JSON.parse (resString);
+
+      /* Ensure the ID matches, should always be the case.  */
+      assert (res.id === id);
+
+      if (res.error !== null)
+        {
+          if (errHandler !== undefined && errHandler (res.error))
+            return null;
+
+          logError ("namecoind returned: " + res.error.message);
+          throw "Namecoind failed to process the request successfully.";
+        }
+
+      return res.result;
+    },
+
+    /**
      * Send an HTTP request and return the result.
      * @param req Request data to send.
      * @return The returned data.
@@ -55,26 +94,52 @@ Namecoind.prototype =
       ch.QueryInterface (Components.interfaces.nsIHttpChannel);
       var auth = this.user + ":" + this.pass;
       ch.setRequestHeader ("Authorization", "Basic " + btoa (auth), false);
+      ch.setRequestHeader ("Accept", "application/json", false);
 
-      var stream = ch.open ();
-      var avail = stream.available ();
+      var s = Components.classes["@mozilla.org/io/string-input-stream;1"]
+                .createInstance (Components.interfaces.nsIStringInputStream);
+      s.setData (req, req.length);
+      ch.QueryInterface (Components.interfaces.nsIUploadChannel);
+      ch.setUploadStream (s, "application/json", -1);
+      ch.requestMethod = "POST";
+
+      s = ch.open ();
+      var avail = s.available ();
       if (avail === 0)
         {
-          stream.close ();
+          s.close ();
           throw "The connection to your local namecoind failed.  Please"
                 + " check the connection settings.";
         }
-      var string = NetUtil.readInputStreamToString (stream, avail, null);
-      stream.close ();
+      var string = NetUtil.readInputStreamToString (s, avail, null);
+      s.close ();
 
       log ("Response code: " + ch.responseStatus);
-      log (string);
+      log ("namecoind response: " + string);
 
-      if (ch.responseStatus === 401)
-        throw "The NameID add-on could not authenticate with the locally"
-              + " running namecoind.  Please check the authentication data.";
-      else if (ch.responseStatus !== 200)
-        throw "Unknown error connecting to namecoind.";
+      switch (ch.responseStatus)
+        {
+        case 401:
+          throw "The NameID add-on could not authenticate with the locally"
+                + " running namecoind.  Please check the authentication data.";
+          break;
+
+        case 200:
+        case 404:
+        case 500:
+          /* Everything ok.  500 means that the request was received fine,
+             but an error occured during processing it.  This has to be
+             handled elsewhere, though.  404 means that the requested method
+             was not found.  */
+          return string;
+
+        default:
+          throw "Unknown error connecting to namecoind.";
+          break;
+        }
+
+      /* Should never be reached.  */
+      assert (false);
     }
 
   };

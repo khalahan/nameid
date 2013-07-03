@@ -20,7 +20,7 @@
 
 Components.utils.import ("resource://gre/modules/Services.jsm");
 
-var EXPORTED_SYMBOLS = ["log", "assert"];
+var EXPORTED_SYMBOLS = ["log", "logError", "assert"];
 
 /**
  * Utility function to log a message to the ErrorConsole.  This is used
@@ -34,6 +34,16 @@ function log (msg)
 }
 
 /**
+ * Report an error to the error console.
+ * @param msg Error message to report.
+ */
+function logError (msg)
+{
+  Components.utils.reportError (msg);
+  dump ("ERROR: " + msg + "\n");
+}
+
+/**
  * Utility function to assert a fact for debugging.
  * @param cond The condition that must hold.
  */
@@ -41,7 +51,7 @@ function assert (cond)
 {
   if (!cond)
     {
-      Components.utils.reportError ("Assertion failure.");
+      logError ("Assertion failure.");
       throw "Assertion failure.";
     }
 }
