@@ -22,7 +22,7 @@
 
 /* Path to the namecoind binary (or rather, command prefix to be used for
    executing RPC commands).  */
-$namecoind = "/usr/local/bin/namecoind-qt -conf=/home/daniel/.namecoin/bitcoin.conf";
+$namecoind = "/usr/local/bin/namecoind -conf=/home/daniel/.namecoin/bitcoin.conf";
 
 /* Namespace used for name lookups.  */
 $namePrefix = "id";
