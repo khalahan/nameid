@@ -157,8 +157,14 @@ NameIdAddon.prototype =
 
       try
         {
-          var nc = new Namecoind ("localhost", "8336", "daniel", "password");
-
+          var prefs = Services.prefs.getBranch ("extensions.nameid-login.");
+          prefs.setCharPref ("rpc.host", "localhost");
+          var host = prefs.getCharPref ("rpc.host");
+          log ("Host: " + host);
+          var port = prefs.getIntPref ("rpc.port");
+          var user = prefs.getCharPref ("rpc.user");
+          var password = prefs.getCharPref ("rpc.password");
+          var nc = new Namecoind (host, port, user, password);
 
           var res = nc.executeRPC ("name_show", ["id/" + id], errHandler);
           var addr = res.address;
