@@ -1,5 +1,3 @@
-* Implement namecoind RPC connection and real message signing.
-
 * Preferences dialog.
 
 * Store trust answers for pages.
