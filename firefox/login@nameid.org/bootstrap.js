@@ -18,8 +18,6 @@
 
 /* Firefox plugin bootstrapping code.  */
 
-Components.utils.import ("chrome://nameid-login/content/NameIdAddon.js");
-
 /** The instance of NameIdAddon used.  */
 var instance = null;
 
@@ -30,6 +28,7 @@ var instance = null;
  */
 function startup (data, reason)
 {
+  Components.utils.import ("chrome://nameid-login/content/NameIdAddon.js");
   instance = new NameIdAddon ();
 }
 
