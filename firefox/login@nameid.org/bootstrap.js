@@ -20,6 +20,8 @@
 
 /** The instance of NameIdAddon used.  */
 var instance = null;
+/** Preferences handler used.  */
+var pref = null;
 
 /**
  * Bootstrap the addon.
@@ -28,8 +30,14 @@ var instance = null;
  */
 function startup (data, reason)
 {
+  Components.utils.import ("chrome://nameid-login/content/PrefHandler.js");
   Components.utils.import ("chrome://nameid-login/content/NameIdAddon.js");
-  instance = new NameIdAddon ();
+
+  pref = new PrefHandler ();
+  pref.installDefaults ();
+
+  instance = new NameIdAddon (pref);
+  instance.register ();
 }
 
 /**
@@ -41,6 +49,9 @@ function shutdown (data, reason)
 {
   instance.unregister ();
   instance = null;
+
+  pref.close ();
+  pref = null;
 }
 
 /**

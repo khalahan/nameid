@@ -26,10 +26,11 @@ var EXPORTED_SYMBOLS = ["NameIdAddon"];
 
 /**
  * The main object encapsulating the addon's state.
+ * @param pref Preferences handler to use.
  */
-function NameIdAddon ()
+function NameIdAddon (pref)
 {
-  this.register ();
+  this.pref = pref;
 }
 
 NameIdAddon.prototype =
@@ -157,14 +158,9 @@ NameIdAddon.prototype =
 
       try
         {
-          var prefs = Services.prefs.getBranch ("extensions.nameid-login.");
-          prefs.setCharPref ("rpc.host", "localhost");
-          var host = prefs.getCharPref ("rpc.host");
-          log ("Host: " + host);
-          var port = prefs.getIntPref ("rpc.port");
-          var user = prefs.getCharPref ("rpc.user");
-          var password = prefs.getCharPref ("rpc.password");
-          var nc = new Namecoind (host, port, user, password);
+          var settings = this.pref.getConnectionSettings ();
+          var nc = new Namecoind (settings.host, settings.port,
+                                  settings.user, settings.password);
 
           var res = nc.executeRPC ("name_show", ["id/" + id], errHandler);
           var addr = res.address;
