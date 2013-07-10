@@ -24,7 +24,7 @@
   <Description about="urn:mozilla:install-manifest">
 
     <em:id>login@nameid.org</em:id>
-    <em:version>0.1</em:version>
+    <em:version>0.1a</em:version>
 
     <em:name>NameID Easy Login</em:name>
     <em:description>This Add-On manages the challenge signing for easier
