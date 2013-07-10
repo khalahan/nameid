@@ -1,5 +1,3 @@
-* Preferences dialog.
-
 * Store trust answers for pages.
 
 * Implement automatic credentials loading on Windows and OS X.

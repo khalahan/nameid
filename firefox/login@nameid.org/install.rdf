@@ -35,6 +35,8 @@ command-line!</em:description>
     <!-- TODO: Replace with https once that is working!  -->
     <em:homepageURL>http://nameid.org/</em:homepageURL>
 
+    <em:optionsURL>chrome://nameid-login/content/preferences.xul</em:optionsURL>
+
     <em:type>2</em:type>
     <em:bootstrap>true</em:bootstrap>
     <em:targetApplication>

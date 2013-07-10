@@ -25,12 +25,14 @@ var EXPORTED_SYMBOLS = ["Namecoind"];
 
 /**
  * The main object encapsulating a namecoind connection.
+ * @param pref Take preferences from here.
  */
-function Namecoind (host, port, user, pass)
+function Namecoind (pref)
 {
-  this.url = "http://" + host + ":" + port;
-  this.user = user;
-  this.pass = pass;
+  var settings = pref.getConnectionSettings ();
+  this.url = "http://" + settings.host + ":" + settings.port;
+  this.user = settings.user;
+  this.pass = settings.password;
 
   /* Increment ID always to ensure we get matching responses to all
      requests sent.  */
@@ -108,20 +110,31 @@ Namecoind.prototype =
       if (avail === 0)
         {
           s.close ();
-          throw "The connection to your local namecoind failed.  Please"
-                + " check the connection settings.";
+          throw "The connection to your local namecoind failed.";
         }
       var string = NetUtil.readInputStreamToString (s, avail, null);
       s.close ();
 
-      log ("Response code: " + ch.responseStatus);
+      /* Sometimes accessing responseStatus throws.  Catch this and fail
+         with a better error messsage.  */
+      var code;
+      try
+        {
+          code = ch.responseStatus;
+        }
+      catch (exc)
+        {
+          throw "Connection timeout, please try again.";
+        }
+
+      log ("Response code: " + code);
       log ("namecoind response: " + string);
 
-      switch (ch.responseStatus)
+      switch (code)
         {
         case 401:
           throw "The NameID add-on could not authenticate with the locally"
-                + " running namecoind.  Please check the authentication data.";
+                + " running namecoind.";
           break;
 
         case 200:

@@ -158,9 +158,7 @@ NameIdAddon.prototype =
 
       try
         {
-          var settings = this.pref.getConnectionSettings ();
-          var nc = new Namecoind (settings.host, settings.port,
-                                  settings.user, settings.password);
+          var nc = new Namecoind (this.pref);
 
           var res = nc.executeRPC ("name_show", ["id/" + id], errHandler);
           var addr = res.address;

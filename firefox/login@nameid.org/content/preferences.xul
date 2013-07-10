@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<?xml-stylesheet href="chrome://global/skin/" type="text/css" ?>
+<!--
+    NameID, a namecoin based OpenID identity provider.
+    Copyright (C) 2013 by Daniel Kraft <d@domob.eu>
+
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+-->
+
+<!-- UI for the preferences dialog.  -->
+
+<prefwindow title="NameID Login Preferences"
+  xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
+
+  <prefpane label="Connection Settings">
+    <preferences>
+      <preference id="prefHost" type="string"
+                  name="extensions.nameid-login.rpc.host" />
+      <preference id="prefPort" type="int"
+                  name="extensions.nameid-login.rpc.port" />
+      <preference id="prefUser" type="string"
+                  name="extensions.nameid-login.rpc.user" />
+      <preference id="prefPassword" type="string"
+                  name="extensions.nameid-login.rpc.password" />
+    </preferences>
+
+    <vbox>
+      <p xmlns="http://www.w3.org/1999/xhtml">Please specify the connection settings that the <strong>NameID Login</strong> add-on
+can use to connect to your namecoind RPC server.</p>
+
+      <groupbox>
+        <caption label="RPC Settings" />
+        <grid>
+          <columns>
+            <column flex="1" />
+            <column flex="2" />
+          </columns>
+          <rows>
+            <row>
+              <hbox align="center">
+                <label control="host" value="Hostname: " />
+              </hbox>
+              <textbox id="host" preference="prefHost" />
+            </row>
+            <row>
+              <hbox align="center">
+                <label control="port" value="Port: " />
+              </hbox>
+              <vbox align="end">
+                <textbox id="port" preference="prefPort"
+                         type="number" min="0" max="65536" size="5" />
+              </vbox>
+            </row>
+            <row>
+              <hbox align="center">
+                <label control="user" value="Username: " />
+              </hbox>
+              <textbox id="user" preference="prefUser" />
+            </row>
+            <row>
+              <hbox align="center">
+                <label control="password" value="Password: " />
+              </hbox>
+              <textbox id="password" preference="prefPassword"
+                       type="password" />
+            </row>
+          </rows>
+        </grid>
+      </groupbox>
+
+      <groupbox>
+        <caption label="Test the Settings" />
+
+        <hbox align="center">
+          <label id="testResult" flex="5" />
+          <button id="testButton" label="Test" flex="1" />
+        </hbox>
+      </groupbox>
+
+    </vbox>
+  </prefpane>
+
+  <script src="preferences.js" />
+
+</prefwindow>
