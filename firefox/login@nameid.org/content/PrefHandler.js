@@ -19,6 +19,8 @@
 /* Handle the preferences.  */
 
 Components.utils.import ("chrome://nameid-login/content/Utils.js");
+Components.utils.import ("resource://gre/modules/FileUtils.jsm");
+Components.utils.import ("resource://gre/modules/NetUtil.jsm");
 Components.utils.import ("resource://gre/modules/Services.jsm");
 
 var EXPORTED_SYMBOLS = ["PrefHandler"];
@@ -72,6 +74,60 @@ PrefHandler.prototype =
       this.defaults.setIntPref ("rpc.port", 8336);
       this.defaults.setCharPref ("rpc.user", "");
       this.defaults.setCharPref ("rpc.password", "");
+
+      /* Try to figure out the credentials from the namecoin config file,
+         if it can be found.  */
+
+      var me = this;
+      function readFile (stream, status)
+        {
+          try
+            {
+              if (!Components.isSuccessCode (status))
+                throw "Error reading namecoin.conf file.";
+
+              log ("Reading namecoin configuration file...");
+              var available = stream.available ();
+              var data = NetUtil.readInputStreamToString (stream, available);
+
+              var re = /^rpcuser=(.*)$/m;
+              var arr = re.exec (data);
+              if (arr)
+                {
+                  me.defaults.setCharPref ("rpc.user", arr[1]);
+                  log ("Found RPC username.");
+                }
+
+              re = /^rpcpassword=(.*)$/m;
+              arr = re.exec (data);
+              if (arr)
+                {
+                  me.defaults.setCharPref ("rpc.password", arr[1]);
+                  log ("Found RPC password.");
+                }
+            }
+          catch (err)
+            {
+              logError ("Error reading namecoin config file: " + err);
+            }
+        }
+
+      try
+        {
+          /* FIXME: Implement this also for Windows and OS X.  */
+          var file = FileUtils.getFile ("Home", [".namecoin"]);
+          if (!file.exists () || !file.isDirectory ())
+            throw "Couldn't locate existing .namecoin directory.";
+          file.append ("namecoin.conf");
+          if (!file.exists () || !file.isFile ())
+            throw "Could not find namecoin.conf.";
+
+          NetUtil.asyncFetch (file, readFile);
+        }
+      catch (err)
+        {
+          logError ("Error loading namecoin default credentials: " + err);
+        }
     }
 
   };
