@@ -67,7 +67,7 @@ provider.  If you don't yet have a name,
 <a href="https://dot-bit.org/">get yourself one</a>!</p>
 
 <p>You can also use this site to view (some) information associated
-to namecoin IDs.  For instance <a href="?name=domob">mine</a>, or use
+to namecoin IDs.  For instance <a href="?name=daniel">mine</a>, or use
 the form to query for an arbitrary identity page:</p>
 <form method="get" action="">
   <p>
