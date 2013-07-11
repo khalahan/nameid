@@ -78,21 +78,12 @@ class MessageList
       throw new RuntimeException ("MessageList is already finished!");
     $this->finished = TRUE;
 
-    if (count ($this->errors) > 0)
-      {
-        echo "<ul class='errors'>\n";
-        foreach ($this->errors as $msg)
-          echo "<li>" . $this->html->escape ($msg) . "</li>\n";
-        echo "</ul>\n";
-      }
-
-    if (count ($this->messages) > 0)
-      {
-        echo "<ul class='messages'>\n";
-        foreach ($this->messages as $msg)
-          echo "<li>" . $this->html->escape ($msg) . "</li>\n";
-        echo "</ul>\n";
-      }
+    foreach ($this->errors as $msg)
+      echo "<div class='alert alert-error'>"
+            . $this->html->escape ($msg) . "</div>\n";
+    foreach ($this->messages as $msg)
+      echo "<div class='alert alert-success'>"
+            . $this->html->escape ($msg) . "</div>\n";
   }
 
   /**

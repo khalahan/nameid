@@ -22,19 +22,32 @@
 if (!isset ($fromIndex) || $fromIndex !== "yes")
   die ("Invalid page load.\n");
 
+?>
+
+<h1><?php echo $html->escape ("$namePrefix/$identityName"); ?></h1>
+
+<?php
+
 $displayInfo = array ("name" => "Real Name",
                       "nick" => "Nickname",
                       "website" => "Website",
-                      "email" => "Email Address",
-                      "bitmessage" => "Bitmessage Address",
+                      "email" => "Email",
+                      "bitmessage" => "Bitmessage",
                       "xmpp" => "XMPP",
-                      "bitcoin" => "Bitcoin Address",
-                      "namecoin" => "Namecoin Address",
-                      "litecoin" => "Litecoin Address",
-                      "ppcoin" => "PPCoin Address");
+                      "bitcoin" => "Bitcoin",
+                      "namecoin" => "Namecoin",
+                      "litecoin" => "Litecoin",
+                      "ppcoin" => "PPCoin");
 if ($identityPage)
   {
-    echo "<dl>\n";
+?>
+
+<p>The Namecoin identity
+<code><?php echo $html->escape ("$namePrefix/$identityName"); ?></code> has some
+public profile information registered:</p>
+
+<?php
+    echo "<dl class='dl-horizontal'>\n";
     foreach ($displayInfo as $key => $label)
       {
         if (isset ($identityPage->$key))
@@ -64,6 +77,10 @@ if ($identityPage)
     echo "</dl>\n";
   }
 else
-  echo "<p>There's no public information for this profile.</p>\n";
-
+  {
+?>
+<p>There's no public information for
+<code><?php echo $html->escape ("$namePrefix/$identityName"); ?></code>.</p>
+<?php
+  }
 ?>

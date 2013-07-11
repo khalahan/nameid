@@ -18,18 +18,10 @@
 
 /* CSS styling.  */
 
-.messages li
+/* Padding for body with fixed navbar.  */
+body
 {
-  color: green;
-}
-.errors li
-{
-  color: red;
-}
-
-textarea
-{
-  width: 50em;
+  padding-top: 40px;
 }
 
 .hidden

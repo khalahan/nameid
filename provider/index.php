@@ -283,46 +283,94 @@ if ($status === "xrds")
 
 /* ************************************************************************** */
 
-// Construct page title.
-switch ($status)
-  {
-  case "identityPage":
-  case "identityNotFound":
-    $pageTitle = "NameID: $identityName";
-    break;
-
-  default:
-    $pageTitle = "NameID";
-    break;
-  }
-
 /* Set encoding to UTF-8.  */
 header ("Content-Type: text/html; charset=utf-8");
 
-echo "<?xml version='1.0' encoding='utf-8' ?>\n";
 ?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN"
-                      "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
 <head>
 
-<title><?php echo $html->escape ($pageTitle); ?></title>
+<title>NameID: Your Crypto-OpenID</title>
 
 <link rel="stylesheet" type="text/css" href="layout/main.css" />
+<link rel="stylesheet" type="text/css" href="layout/bootstrap.min.css" />
 
 </head>
 <body>
 
-<h1><?php echo $html->escape ($pageTitle); ?></h1>
-
+  <div class="navbar navbar-fixed-top">
+    <div class="navbar-inverse">
+      <div class="navbar-inner">
+        <a class="brand" href="?">NameID</a>
+        <ul class="nav">
 <?php
-$msg->finish ();
-?>
+$classHome = "";
+$classLogin = "";
+$classAddOn = "";
+$classFAQ = "";
+$classContact = "";
+switch ($status)
+  {
+  case "default":
+    $classHome = "active";
+    break;
 
+  case "loginForm":
+  case "loggedIn":
+    $classLogin = "active";
+    break;
+
+  case "addon":
+    $classAddOn = "active";
+    break;
+
+  case "faq":
+    $classFAQ = "active";
+    break;
+
+  case "contact":
+    $classContact = "active";
+    break;
+
+  default:
+    // Something else, ignore.
+    break;
+  }
+?>
+          <li class="<?php echo $classHome; ?>"><a href="?">Home</a></li>
+          <li class="<?php echo $classLogin; ?>">
+            <a href="?view=login">Your ID</a>
+          </li>
+          <li class="<?php echo $classAddOn; ?>">
+            <a href="?view=addon">Add-On</a>
+          </li>
+          <li class="<?php echo $classFAQ; ?>"><a href="?view=faq">FAQs</a></li>
+          <li class="<?php echo $classContact; ?>">
+            <a href="?view=contact">Contact</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="container">
 <?php
 $fromIndex = "yes";
 include ("pages/$status.php");
 ?>
+  </div>
+
+  <hr />
+
+  <p class="text-center">Copyright &copy; 2013
+by <a href="http://www.domob.eu/">Daniel Kraft</a>.
+<b>NameID</b> is free software under the terms of the
+<a href="https://www.gnu.org/licenses/gpl.html">GPL v3</a>,
+check out the <a href="https://gitorious.org/nameid/">source code</a>!</p>
+
+  <p class="text-center">BTC: 1<b>Nameid</b>3brhZrbTN1M7t6afMAfVBiGioJT
+| NMC: NFUJUGVzjTuef8bX7dd3BfXekfu8cdzkuH</p>
 
 </body>
 </html>

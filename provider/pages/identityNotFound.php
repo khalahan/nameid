@@ -24,6 +24,8 @@ if (!isset ($fromIndex) || $fromIndex !== "yes")
 
 ?>
 
+<h1>Unknown Name</h1>
+
 <p>The name
-<strong><?php echo $html->escape ("$namePrefix/$identityName"); ?></strong>
+<code><?php echo $html->escape ("$namePrefix/$identityName"); ?></code>
 is not yet registered.  Hurry up!</p>

@@ -24,26 +24,45 @@ if (!isset ($fromIndex) || $fromIndex !== "yes")
 
 ?>
 
-<form id="loginForm" method="post" action="?action=login&amp;view=login">
+<h1>Sign In</h1>
 
-<p><label for="identity">Identity:</label>
-  <?php echo $html->escape ($namePrefix); ?>/
-  <input type="text" name="identity" id="identity" />
-</p>
+<?php
+$msg->finish ();
+?>
 
 <div class="hideWithAddon">
-  <p><label for="message">Please use <kbd>namecoind signmessage</kbd> with the
-  address corresponding to your identity to sign the following
-  message:</label></p>
-  <textarea id="message" readonly="readonly">Enter your ID to see the message to sign.</textarea>
+  <div class="alert alert-info">Manually signing the challenge is very
+troublesome.  Take a look at our <a href="?view=addon">add-on</a>.</div>
+</div>
 
-  <p><label for="signature">Put the signature below:</label></p>
-  <textarea name="signature" id="signature"></textarea>
+<p>In order to sign in with your Namecoin identity, you have to
+<a href="https://en.wikipedia.org/wiki/Digital_signature">sign</a>
+a <b>challenge message</b> with the Namecoin address
+holding your identity.  This process does not reveal your private key
+to this website or anyone else, but can be used to prove that you are indeed
+the owner of your identity.</p>
+
+<form id="loginForm" method="post" action="?action=login&amp;view=login">
+
+<div class="input-prepend">
+  <label class="add-on" for="identity"><?php
+echo $html->escape ($namePrefix);
+?>/</label>
+  <input type="text" name="identity" id="identity" />
+</div>
+
+<div class="hideWithAddon">
+  <p><label for="message">Please use <code>namecoind signmessage</code> with the
+address corresponding to your identity to sign the following
+message:</label></p>
+  <textarea id="message" readonly="readonly">Enter your ID to see the message to sign.</textarea>
+  <textarea name="signature" id="signature"
+            placeholder="Put the signature here."></textarea>
 </div>
 
 <p>
-  <button type="submit" name="login">Sign In</button>
-  <button type="submit" name="cancel" id="cancel">Cancel</button>
+  <button type="submit" name="login" class="btn btn-primary">Sign In</button>
+  <button type="submit" name="cancel" class="btn" id="cancel">Cancel</button>
 </p>
 
 </form>

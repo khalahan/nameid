@@ -3,6 +3,7 @@ ChangeLog for NameID Identity Provider
 
 Version 0.2a (trunk):
   * Update login form to work with the Mozilla add-on.
+  * Page layout based on Twitter's bootstrap.
 
 Version 0.1a (2013-06-25):
   * First released alpha version.

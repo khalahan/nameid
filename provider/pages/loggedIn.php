@@ -27,13 +27,19 @@ $idUrl = "$serverUri?name=" . urlencode ($loggedInUser);
 
 ?>
 
+<h1>Welcome, <?php echo $html->escape ($fullId); ?>!</h1>
+
+<?php
+$msg->finish ();
+?>
+
 <p>You are currently logged in as
-<strong><?php echo $html->escape ($fullId); ?></strong>.
-Your identity URL:</p>
-<p><a href="<?php echo $html->escape ($idUrl); ?>"><?php
+<code><?php echo $html->escape ($fullId); ?></code>.
+Your identity URL is:</p>
+<address><a href="<?php echo $html->escape ($idUrl); ?>"><?php
   echo $html->escape ($idUrl);
-?></a></p>
+?></a></address>
 
 <form method="post" action="?action=logout&amp;view=login">
-  <p><button type="submit">Log Out</button></p>
+  <p><button class="btn btn-primary" type="submit">Log Out</button></p>
 </form>
