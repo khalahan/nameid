@@ -27,16 +27,18 @@ $fullId = "$namePrefix/$loggedInUser";
 
 ?>
 
+<h1>Confirm Trust</h1>
+
 <p>You are currently logged in as
-<strong><?php echo $html->escape ($fullId); ?></strong>.
+<code><?php echo $html->escape ($fullId); ?></code>.
 Should we confirm your identity to the requesting page below?</p>
-<p><a href="<?php echo $html->escape ($trustRoot); ?>"><?php
+<address><a href="<?php echo $html->escape ($trustRoot); ?>"><?php
   echo $html->escape ($trustRoot);
-?></a></p>
+?></a></address>
 
 <form method="post" action="?action=trust">
   <p>
-    <button type="submit" name="trust">Yes</button>
-    <button type="submit" name="notrust">No</button>
+    <button class="btn btn-primary" type="submit" name="trust">Yes</button>
+    <button class="btn" type="submit" name="notrust">No</button>
   </p>
 </form>
