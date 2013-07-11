@@ -82,11 +82,20 @@ NameIdAddon.prototype =
     {
       var nonceEl = doc.getElementById ("nameid-nonce");
       var uriEl = doc.getElementById ("nameid-uri");
-      if (!nonceEl || !uriEl)
+      var form = doc.getElementById ("loginForm");
+      if (!nonceEl || !uriEl || !form)
         {
           log ("Found no NameID login form.");
           return;
         }
+
+      /* Ignore duplicate page load events.  */
+      if (form.dataset.nameidLoginObserved === "yes")
+        {
+          log ("Duplicate event, ignoring.");
+          return;
+        }
+      form.dataset.nameidLoginObserved = "yes";
 
       /* Ask the user about trust for this page.  */
       var text = "The page at '" + doc.URL + "' contains a NameID"
@@ -105,7 +114,6 @@ NameIdAddon.prototype =
 
       /* Connect a handler to intercept the form submit.  Note that we don't
          want to intercept if the cancel button was clicked.  */
-      var form = doc.getElementById ("loginForm");
       var cancel = doc.getElementById ("cancel");
       this.cancelClicked = false;
       var me = this;
