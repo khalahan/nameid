@@ -72,7 +72,7 @@ provider.  If you don't yet have a name,
 <p>You can also use this site to view (some) information associated
 to namecoin IDs.  For instance <a href="?name=daniel">mine</a>, or use
 the form to query for an arbitrary identity page:</p>
-<form method="get" action="">
+<form method="get" action="?">
   <div class="input-prepend input-append">
     <label for="name" class="add-on"><?php
 echo $html->escape ($namePrefix);

@@ -288,10 +288,12 @@ header ("Content-Type: text/html; charset=utf-8");
 
 ?>
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
 
 <title>NameID: Your Crypto-OpenID</title>
+
+<meta charset="utf-8" />
 
 <link rel="stylesheet" type="text/css" href="layout/main.css" />
 <link rel="stylesheet" type="text/css" href="layout/bootstrap.min.css" />
