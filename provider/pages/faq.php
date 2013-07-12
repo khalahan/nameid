@@ -106,7 +106,8 @@ OpenID consumer site, where you are then authenticated with your identity.</p>
   <p>First of all, you need a 
 <a href="https://dot-bit.org/Namespace:Identity"><b>Namecoin identity</b></a>,
 and need the wallet that owns it on your local system.  Second, you need
-<a href="https://dot-bit.org/forum/viewtopic.php?f=2&t=998"><b>Namecoin-Qt</b></a> installed and running, and need to be able to perform
+<a href="https://dot-bit.org/forum/viewtopic.php?f=2&amp;t=998"><b>Namecoin-Qt</b></a>
+installed and running, and need to be able to perform
 <code>signmessage</code> commands with it.  Don't worry though, you can
 install the <a href="?view=addon"><b>NameID Easy Login</b></a> add-on for
 <a href="https://www.mozilla.org/">Mozilla</a> browsers, which takes

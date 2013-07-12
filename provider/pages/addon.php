@@ -45,7 +45,7 @@ browsers.  Try it out:</p>
 <small>Version 0.1.1a</small></a></div>
 
 <p class="padTop">When the add-on is installed, you have to make sure that the
-<a href="https://dot-bit.org/forum/viewtopic.php?f=2&t=998"><b>Namecoin-Qt</b></a>
+<a href="https://dot-bit.org/forum/viewtopic.php?f=2&amp;t=998"><b>Namecoin-Qt</b></a>
 daemon is running, and check the connection settings in the add-on's
 preferences dialog.  Those must match your <code>namecoin.conf</code>
 file.  When everything is set up, the add-on will allow you to automate
