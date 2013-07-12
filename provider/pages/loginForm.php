@@ -42,7 +42,8 @@ holding your identity.  This process does not reveal your private key
 to this website or anyone else, but can be used to prove that you are indeed
 the owner of your identity.</p>
 
-<form id="loginForm" method="post" action="?action=login&amp;view=login">
+<form id="loginForm" method="post" class="offset1"
+      action="?action=login&amp;view=login">
 
 <div class="input-prepend">
   <label class="add-on" for="identity"><?php
