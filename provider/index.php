@@ -213,6 +213,7 @@ function tryView ()
 
         case "addon":
         case "contact":
+        case "faq":
           $status = $view;
           break;
 

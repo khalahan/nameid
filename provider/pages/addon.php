@@ -52,4 +52,4 @@ file.  When everything is set up, the add-on will allow you to automate
 the signing procedure whenever it recognizes a login form for <b>NameID</b>.
 It may ask for your Namecoin wallet passphrase in case you have an encrypted
 and locked wallet, but appart from that, you only ever have to enter
-the identity you want to use.</p>
+the identity you want to use and submit.</p>

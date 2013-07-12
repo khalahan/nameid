@@ -34,6 +34,13 @@ body
   margin-top: 2em;
 }
 
+/* Style questions in FAQ list.  */
+.faq
+{
+  font-weight: bold;
+  font-size: x-large;
+}
+
 /* Hide certain parts of the page when the addon is there.  */
 .withAddon .hideWithAddon
 {
