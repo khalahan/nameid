@@ -32,13 +32,16 @@ $fullId = "$namePrefix/$loggedInUser";
 <p>You are currently logged in as
 <code><?php echo $html->escape ($fullId); ?></code>.
 Should we confirm your identity to the requesting page below?</p>
-<address><a href="<?php echo $html->escape ($trustRoot); ?>"><?php
-  echo $html->escape ($trustRoot);
-?></a></address>
 
-<form method="post" action="?action=trust">
-  <p>
-    <button class="btn btn-primary" type="submit" name="trust">Yes</button>
-    <button class="btn" type="submit" name="notrust">No</button>
-  </p>
-</form>
+<div class="offset1">
+  <address><a href="<?php echo $html->escape ($trustRoot); ?>"><?php
+    echo $html->escape ($trustRoot);
+  ?></a></address>
+
+  <form method="post" action="?action=trust">
+    <p>
+      <button class="btn btn-primary" type="submit" name="trust">Yes</button>
+      <button class="btn" type="submit" name="notrust">No</button>
+    </p>
+  </form>
+</div>
