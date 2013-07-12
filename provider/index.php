@@ -211,6 +211,10 @@ function tryView ()
             $status = "loggedIn";
           break;
 
+        case "addon":
+          $status = "addon";
+          break;
+
         default:
           // Just leave status as unknown.
           break;

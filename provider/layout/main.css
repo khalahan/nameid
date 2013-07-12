@@ -29,6 +29,11 @@ body
   display: none;
 }
 
+.padTop
+{
+  margin-top: 2em;
+}
+
 /* Hide certain parts of the page when the addon is there.  */
 .withAddon .hideWithAddon
 {
