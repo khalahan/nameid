@@ -19,6 +19,7 @@
 /* Main driver object for the addon.  */
 
 Components.utils.import ("chrome://nameid-login/content/Namecoind.js");
+Components.utils.import ("chrome://nameid-login/content/TrustManager.js");
 Components.utils.import ("chrome://nameid-login/content/Utils.js");
 Components.utils.import ("resource://gre/modules/Services.jsm");
 
@@ -31,6 +32,7 @@ var EXPORTED_SYMBOLS = ["NameIdAddon"];
 function NameIdAddon (pref)
 {
   this.pref = pref;
+  this.trust = new TrustManager (pref);
 }
 
 NameIdAddon.prototype =
@@ -50,6 +52,8 @@ NameIdAddon.prototype =
     unregister: function ()
     {
       Services.obs.removeObserver (this, "document-element-inserted");
+      this.trust.close ();
+      this.trust = null;
     },
 
     /**
@@ -98,10 +102,7 @@ NameIdAddon.prototype =
       form.dataset.nameidLoginObserved = "yes";
 
       /* Ask the user about trust for this page.  */
-      var text = "The page at '" + doc.URL + "' contains a NameID"
-                 + " login form.  Do you want to permit it to automatically"
-                 + " sign challenge messages for you?";
-      var ok = Services.prompt.confirm (null, "Allow NameID?", text);
+      var ok = this.trust.decide (doc.URL);
       if (!ok)
         return;
 

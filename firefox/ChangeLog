@@ -2,6 +2,7 @@ ChangeLog for NameID Login Add-On
 =================================
 
 Version 0.2a (trunk):
+  * Allow remembering trust/distrust decisions for sites.
 
 Version 0.1.1a (2013-07-11):
   * Fix bug observing the login form page load multiple times.

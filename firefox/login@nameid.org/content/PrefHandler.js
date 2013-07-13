@@ -66,6 +66,34 @@ PrefHandler.prototype =
     },
 
     /**
+     * Get the black/whitelist for trusted sites.  It is fetched from the
+     * preference and decoded already into a string array.
+     * @param type Whether we want the black or whitelist.
+     * @return The corresponding list as string array.
+     */
+    getTrustList: function (type)
+    {
+      assert (type === "black" || type === "white");
+      var strval = this.prefs.getCharPref ("trust." + type);
+
+      return JSON.parse (strval);
+    },
+
+    /**
+     * Set the black/whitelist for trusted sites.  The passed in string array
+     * is automatically converted to a JSON string for storage.
+     * @param type Whether we want the black or whiteliste.
+     * @param lst The string array to store.
+     */
+    setTrustList: function (type, lst)
+    {
+      assert (type === "black" || type === "white");
+      var strval = JSON.stringify (lst);
+
+      this.prefs.setCharPref ("trust." + type, strval);
+    },
+
+    /**
      * Install the default preferences.
      */
     installDefaults: function ()
@@ -74,6 +102,10 @@ PrefHandler.prototype =
       this.defaults.setIntPref ("rpc.port", 8336);
       this.defaults.setCharPref ("rpc.user", "");
       this.defaults.setCharPref ("rpc.password", "");
+
+      /* FIXME: Whitelist nameid.org by default?  */
+      this.defaults.setCharPref ("trust.white", "[]");
+      this.defaults.setCharPref ("trust.black", "[]");
 
       /* Try to figure out the credentials from the namecoin config file,
          if it can be found.  */
