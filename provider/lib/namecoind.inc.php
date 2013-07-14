@@ -159,8 +159,19 @@ class Namecoind
     $data = $this->getIdData ($name);
     assert (isset ($data->address));
 
-    $args = array ($data->address, $sig, $msg);
-    $res = $this->executeRPC ("verifymessage", $args);
+    /* Catch the error for invalid base64 in the signature, which can easily
+       be triggered by the user.  Report it simply as invalid.  */
+    try
+      {
+        $args = array ($data->address, $sig, $msg);
+        $res = $this->executeRPC ("verifymessage", $args);
+      }
+    catch (NamecoindException $exc)
+      {
+        if (isset ($exc->error->code) && $exc->error->code === -5)
+          return FALSE;
+        throw $exc;
+      }
 
     return ($res === TRUE);
   }
