@@ -146,7 +146,10 @@ available to anyone who wants to check it out or even reuse it for
 own projects under the
 <a href="https://www.gnu.org/licenses/gpl.html"><b>GPL v3</b></a>.</p>
   <p>For the first question, you have to decide on your own whether or
-not you trust me based on the information on this page.</p>
+not you trust me based on the information on this page.  In any case you can
+also just
+<a href="https://gitorious.org/nameid/">grab the source</a> and
+set up <b>your own server</b> if you like the idea!</p>
 </div>
 
 <div class="well well-small">
@@ -170,14 +173,6 @@ you have to use <code>http://nameid.<b>org</b>/</code> for signing into
 OpenID sites anyway, because otherwise it will most probably fail when the
 consumer site tries to connect to <b>NameID</b> on its own in order to
 verify your request.</p>
-</div>
-
-<div class="well well-small">
-  <p class="faq">Why is there no secure connection?</p>
-  <p>Very good point, it is planned in the future (and necessary for
-<b>NameID</b> to operate securely in a production environment), but I have
-to sort some technical details out with my hosting provider before I can
-enable a secure <b>HTTPS</b> connection.</p>
 </div>
 
 <div class="well well-small">
