@@ -95,7 +95,7 @@ there's no need to keep any sensitive information around.</p>
 
 <div class="well well-small">
   <p class="faq">How do I sign into an OpenID-enabled site?</p>
-  <p>Simply enter <code>http://nameid.org/</code> into the
+  <p>Simply enter <code>https://nameid.org/</code> into the
 login-box.  You will be redirected to <b>NameID</b> where you can log in
 with your name, and if that is successful, you will be returned to the
 OpenID consumer site, where you are then authenticated with your identity.</p>
@@ -169,7 +169,7 @@ verify the tags against my key.</p>
 <a href="http://nameid.bit/">nameid.bit</a> and
 <a href="http://myid.bit/">myid.bit</a> for it.  So far I haven't yet
 configured them, though, but this will come in the future.  Note however that
-you have to use <code>http://nameid.<b>org</b>/</code> for signing into
+you have to use <code>https://nameid.<b>org</b>/</code> for signing into
 OpenID sites anyway, because otherwise it will most probably fail when the
 consumer site tries to connect to <b>NameID</b> on its own in order to
 verify your request.</p>
