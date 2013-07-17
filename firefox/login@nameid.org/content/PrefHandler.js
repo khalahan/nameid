@@ -103,8 +103,7 @@ PrefHandler.prototype =
       this.defaults.setCharPref ("rpc.user", "");
       this.defaults.setCharPref ("rpc.password", "");
 
-      /* FIXME: Whitelist nameid.org by default?  */
-      this.defaults.setCharPref ("trust.white", "[]");
+      this.defaults.setCharPref ("trust.white", "[\"https://nameid.org/\"]");
       this.defaults.setCharPref ("trust.black", "[]");
 
       /* Try to figure out the credentials from the namecoin config file,

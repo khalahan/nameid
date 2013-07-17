@@ -23,7 +23,7 @@
 <prefwindow title="NameID Login Preferences"
   xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
 
-  <prefpane label="Connection Settings">
+  <prefpane id="paneRPC" label="Namecoind">
     <preferences>
       <preference id="prefHost" type="string"
                   name="extensions.nameid-login.rpc.host" />
@@ -35,16 +35,17 @@
                   name="extensions.nameid-login.rpc.password" />
     </preferences>
 
-    <vbox>
-      <p xmlns="http://www.w3.org/1999/xhtml">Please specify the connection settings that the <strong>NameID Login</strong> add-on
-can use to connect to your namecoind RPC server.</p>
+    <vbox style="padding-bottom: 2em;">
+      <description style="max-width: 40em;">Please specify the connection
+settings that the NameID Login add-on can use to connect
+to your namecoind RPC server.</description>
 
       <groupbox>
         <caption label="RPC Settings" />
         <grid>
           <columns>
+            <column />
             <column flex="1" />
-            <column flex="2" />
           </columns>
           <rows>
             <row>
@@ -83,11 +84,33 @@ can use to connect to your namecoind RPC server.</p>
         <caption label="Test the Settings" />
 
         <hbox align="center">
-          <label id="testResult" flex="5" />
-          <button id="testButton" label="Test" flex="1" />
+          <label id="testResult" flex="1" />
+          <button id="testButton" label="Test" />
         </hbox>
       </groupbox>
 
+    </vbox>
+  </prefpane>
+
+  <prefpane id="paneTrust" label="Sites">
+    <vbox>
+      <description style="max-width: 40em;">When a previously unknown site seems
+to contain a NameID login box, you are asked whether or not to enable
+automatic signing.  Below you can revoke your decisions by removing
+entries from the list.</description>
+
+      <hbox align="center">
+        <listbox id="trustList" flex="1">
+          <listhead>
+            <listheader label="Site" />
+            <listheader label="Status" />
+          </listhead>
+          <listcols>
+            <listcol flex="1" />
+            <listcol />
+          </listcols>
+        </listbox>
+      </hbox>
     </vbox>
   </prefpane>
 
