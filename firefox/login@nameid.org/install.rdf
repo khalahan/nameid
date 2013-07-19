@@ -32,8 +32,7 @@ login to NameID for you.  No more dealing with the
 command-line!</em:description>
 
     <em:creator>Daniel Kraft</em:creator>
-    <!-- TODO: Replace with https once that is working!  -->
-    <em:homepageURL>http://nameid.org/</em:homepageURL>
+    <em:homepageURL>https://nameid.org/</em:homepageURL>
 
     <em:optionsURL>chrome://nameid-login/content/preferences.xul</em:optionsURL>
 
