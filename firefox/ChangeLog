@@ -1,6 +1,8 @@
 ChangeLog for NameID Login Add-On
 =================================
 
+Version 0.3a (trunk):
+
 Version 0.2a (2013-07-19):
   * Allow remembering trust/distrust decisions for sites.
   * https://nameid.org/ is white-listed by default.
