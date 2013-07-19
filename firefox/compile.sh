@@ -22,10 +22,11 @@ zipfile=NameIdLogin-0.2a.xpi
 
 files="bootstrap.js chrome.manifest install.rdf"
 for file in Namecoind.js NameIdAddon.js \
-            preferences.js preferences.xul \
-            PrefHandler.js Utils.js
+            PrefHandler.js TrustManager.js Utils.js \
+            preferences.js preferences.xul
 do
   files+=" content/$file"
 done
 
+rm $zipfile
 (cd $dir; zip ../$zipfile $files)
