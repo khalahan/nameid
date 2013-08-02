@@ -4,3 +4,7 @@
 * Allow setting sreg data directly with special field in value.
 
 * Logo for the webpage.
+
+* Use HTTP requests for JSON-RPC.
+
+* Separate off login code further and write HOWTO for stand-alone servers.
