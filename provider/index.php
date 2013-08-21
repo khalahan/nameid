@@ -150,6 +150,11 @@ function tryAction ()
           $identity = $req->getString ("identity");
           $signature = $req->getString ("signature");
 
+          $version = $req->getInteger ("version");
+          if ($version !== 1)
+            throw new RuntimeException ("Unsupported signature"
+                                        ." version: $version");
+
           /* Redirect to loginForm in case an exception is thrown
              below (i. e., authentication fails).  */
           $status = "loginForm";

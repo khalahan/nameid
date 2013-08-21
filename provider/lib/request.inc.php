@@ -73,6 +73,20 @@ class RequestHandler
   }
 
   /**
+   * Query for a request integer.
+   * @param key The key.
+   * @return The request value as integer.
+   */
+  public function getInteger ($key)
+  {
+    if (!$this->check ($key))
+      throw new RuntimeException ("No request value for '$key'.");
+
+    $res = (int) $this->req[$key];
+    return $res;
+  }
+
+  /**
    * Query for a named button click.
    * @param key The key.
    * @return True if the button with that name submitted the form.

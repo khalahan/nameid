@@ -45,6 +45,8 @@ the owner of your identity.</p>
 <form id="loginForm" method="post" class="offset1"
       action="?action=login&amp;view=login">
 
+<input type="hidden" name="version" value="1" />
+
 <div class="input-prepend">
   <label class="add-on" for="identity"><?php
 echo $html->escape ($namePrefix);
