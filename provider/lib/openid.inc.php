@@ -37,15 +37,15 @@ class OpenID
   /** Session management object.  */
   private $session;
 
-  /** Namecoind connection.  */
+  /** Namecoin connection.  */
   private $nc;
 
   /**
    * Construct a fresh connection.
    * @param session The session object to use.
-   * @param nc Namecoind connection to use.
+   * @param nc Namecoin connection to use.
    */
-  public function __construct (Session $session, Namecoind $nc)
+  public function __construct (Session $session, NamecoinInterface $nc)
   {
     global $serverUri, $openidStorageDir;
 

@@ -18,13 +18,13 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-/* Test the namecoind interface.  */
+/* Test the namecoin interface.  */
 
-require_once ("../lib/namecoind.inc.php");
+require_once ("../lib/namecoin_interface.inc.php");
 
-$nc = new Namecoind ();
+$nc = new NamecoinInterface ();
 
-$res = $nc->getIdValue ("domob");
+$res = $nc->getIdValue ("dani");
 assert ($res->email === "d@domob.eu");
 
 $thrown = FALSE;
@@ -39,8 +39,8 @@ catch (NameNotFoundException $exc)
 assert ($thrown);
 
 $msg = "My test message to be signed!\nAnother line.";
-$sig = "G6HzJRByCkK4LMzw2BDaObpKr2fJUslb7YxZ3lqk6j0tWRXwaG8I5Q6Ro874V"
-       ."/xDJAWThpb66WFO3BLMhmkz6Ek=";
+$sig = "HCpqMVqWfYuT0WJ8WXyLhMXF5lnZ0DwphVcV0rr8bCNxONddYJtINIs5I8Bd"
+       ."Mqrk4wKaGQTK8035q+IMW3JVP0g=";
 $res = $nc->verifyMessage ("domob", $msg, $sig);
 assert ($res);
 $res = $nc->verifyMessage ("domob", "forged message", $sig);

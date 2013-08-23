@@ -22,7 +22,7 @@
 require_once ("lib/authenticator.inc.php");
 require_once ("lib/html.inc.php");
 require_once ("lib/messages.inc.php");
-require_once ("lib/namecoind.inc.php");
+require_once ("lib/namecoin_interface.inc.php");
 require_once ("lib/openid.inc.php");
 require_once ("lib/request.inc.php");
 require_once ("lib/session.inc.php");
@@ -37,7 +37,7 @@ header("Pragma: no-cache");
 
 // Construct the basic worker classes.
 $session = new Session ();
-$nc = new Namecoind ();
+$nc = new NamecoinInterface ();
 $req = new RequestHandler ();
 $openid = new OpenID ($session, $nc);
 $html = new HtmlOutput ();

@@ -35,7 +35,7 @@ class Authenticator
    * @param nc The namecoind connection to use.
    * @param session The session handler to use.
    */
-  public function __construct (Namecoind $nc, Session $session)
+  public function __construct (NamecoinInterface $nc, Session $session)
   {
     $this->nc = $nc;
     $this->session = $session;
