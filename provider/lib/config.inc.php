@@ -20,9 +20,11 @@
 /* Configuration variables are set here.  This file needs to be updated
    when setting up the identity provider on a server accordingly.  */
 
-/* Path to the namecoind binary (or rather, command prefix to be used for
-   executing RPC commands).  */
-$namecoind = "/usr/local/bin/namecoind -conf=/home/daniel/.namecoin/namecoin.conf";
+/* Connection settings to namecoind.  */
+$rpcHost = "localhost";
+$rpcPort = 8336;
+$rpcUser = "user";
+$rpcPassword = "password";
 
 /* Namespace used for name lookups.  */
 $namePrefix = "id";

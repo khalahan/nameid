@@ -61,9 +61,10 @@ class NamecoinInterface
    */
   public function __construct ()
   {
-    global $namecoind, $namePrefix;
+    global $rpcHost, $rpcPort, $rpcUser, $rpcPassword;
+    global $namePrefix;
 
-    $this->rpc = new Namecoind ($namecoind);
+    $this->rpc = new HttpNamecoin ($rpcHost, $rpcPort, $rpcUser, $rpcPassword);
     $this->ns = $namePrefix;
   }
 

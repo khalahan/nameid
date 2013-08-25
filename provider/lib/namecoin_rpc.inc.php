@@ -129,6 +129,136 @@ abstract class NamecoinRPC
 }
 
 /* ************************************************************************** */
+/* Interface via HTTP.  */
+
+/**
+ * Exception thrown when we get a HTTP error code not recognised.
+ */
+class HttpRpcException extends RpcException
+{
+
+  /** HTTP return code.  */
+  public $returnCode;
+
+  /**
+   * Construct it with the given error code.
+   * @param returnCode The unknown HTTP return code.
+   */
+  public function __construct ($returnCode)
+  {
+    parent::__construct ("HTTP to namecoin failed with code $returnCode.");
+    $this->returnCode = $returnCode;
+  }
+
+}
+
+/**
+ * Interface method via HTTP.
+ */
+class HttpNamecoin extends NamecoinRpc
+{
+
+  /** Host to connect to.  */
+  private $host;
+  /** Port to connect to.  */
+  private $port;
+  /** User name to authenticate as.  */
+  private $user;
+  /** Password to authenticate with.  */
+  private $password;
+
+  /** Next ID for JSON-RPC.  */
+  private $nextId;
+
+  /**
+   * Construct it with the given connection settings.
+   * @param host The connection host.
+   * @param port The connection port.
+   * @param user The connection user name.
+   * @param password The connection password.
+   */
+  public function __construct ($host, $port, $user, $password)
+  {
+    parent::__construct ();
+
+    $this->host = $host;
+    $this->port = $port;
+    $this->user = $user;
+    $this->password = $password;
+
+    $this->nextId = 0;
+  }
+
+  /**
+   * Execute a namecoind RPC call and return its result or throw an
+   * error if it fails.
+   * @param method RPC method to call.
+   * @param args Arguments to the method as array of strings.
+   * @return JSON result as object.
+   */
+  public function executeRPC ($method, $args)
+  {
+    $id = $this->nextId;
+    ++$this->nextId;
+    $reqObj = array ("id" => $id, "method" => $method, "params" => $args);
+    $request = json_encode ($reqObj);
+
+    $code = 0;
+    $response = $this->queryHTTP ($request, $code);
+
+    $okCodes = array (200, 404, 500);
+    if (!in_array ($code, $okCodes))
+      throw new HttpRpcException ($code);
+
+    $res = $this->decode ($response);
+    assert ($res->id === $id);
+    if ($res->error !== NULL)
+      throw new JsonRpcError ($res->error);
+
+    return $res->result;
+  }
+
+  /**
+   * Perform an HTTP query to the configured server.  The given
+   * string is POSTed, and the return code as well as returned
+   * content string is returned.  No JSON parsing.
+   * @param request The request to post.
+   * @param code Set to the HTTP return code.
+   * @return The response body.
+   */
+  private function queryHTTP ($request, &$code)
+  {
+    $url = "http://{$this->host}:{$this->port}";
+    $ch = curl_init ($url);
+
+    curl_setopt ($ch, CURLOPT_POST, 1);
+    curl_setopt ($ch, CURLOPT_POSTFIELDS, $request);
+    curl_setopt ($ch, CURLOPT_RETURNTRANSFER, TRUE);
+
+    $headers = array ("Content-Type: application/json",
+                      "Accept: application/json");
+    curl_setopt ($ch, CURLOPT_HTTPHEADER, $headers);
+    curl_setopt ($ch, CURLOPT_USERAGENT, "NameID PHP Identity-Provider");
+
+    curl_setopt ($ch, CURLOPT_HTTPAUTH, CURLAUTH_ANY);
+    curl_setopt ($ch, CURLOPT_USERPWD, "{$this->user}:{$this->password}");
+
+    $res = curl_exec ($ch);
+    if ($res === FALSE)
+      {
+        curl_close ($ch);
+        throw new RpcException ("HTTP connection to namecoin failed.");
+      }
+
+    $code = curl_getinfo ($ch, CURLINFO_HTTP_CODE);
+    curl_close ($ch);
+
+    return $res;
+  }
+
+}
+
+/* ************************************************************************** */
 /* Interface via the binary.  */
 
 /**
