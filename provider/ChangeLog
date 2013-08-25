@@ -4,6 +4,7 @@ ChangeLog for NameID Identity Provider
 Version 0.3a (trunk):
   * Added 'version' field to sign-in form that can be used in the future
     to provide for backward compatibility.
+  * Use JSON-RPC over HTTP directly rather than the namecoind binary.
 
 Version 0.2a (2013-07-12):
   * Update login form to work with the Mozilla add-on.
