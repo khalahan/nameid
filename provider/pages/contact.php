@@ -39,8 +39,8 @@ commercial interests in it.  I have an IT service business registered
 in Austria nevertheless (not because of this project, though), and you
 can contact me at:</p>
 <address class="offset1">Daniel Kraft<br />
-Erdbergweg 26/21<br />
-8052 Graz<br />
+Papierm&uuml;hlgasse 21<br />
+8020 Graz<br />
 Austria<br /><br />
 <a href="mailto:d@domob.eu">d@domob.eu</a><br />
 GnuPG: <a href="domob.asc">04F7CF52</a>
