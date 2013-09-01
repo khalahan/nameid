@@ -20,9 +20,11 @@
 
 /* Test the namecoin interface.  */
 
-require_once ("../lib/namecoin_interface.inc.php");
+require_once ("../lib/config.inc.php");
+require_once ("../libauth/namecoin_interface.inc.php");
 
-$nc = new NamecoinInterface ();
+$rpc = new HttpNamecoin ($rpcHost, $rpcPort, $rpcUser, $rpcPassword);
+$nc = new NamecoinInterface ($rpc, $namePrefix);
 
 $res = $nc->getIdValue ("dani");
 assert ($res->email === "d@domob.eu");

@@ -20,7 +20,6 @@
 /* Code that uses the JSON-RPC interface classes and implements the high-level
    stuff like name info extraction and message verification on top.  */
 
-require_once ("config.inc.php");
 require_once ("namecoin_rpc.inc.php");
 
 /**
@@ -57,19 +56,18 @@ class NamecoinInterface
   private $ns;
 
   /**
-   * Construct, which opens the RPC interface object automatically.
+   * Construct given the namecoin RPC interface to use.
+   * @param rpc The RPC interface to use.
+   * @param ns Namecoin namespace to use for names.
    */
-  public function __construct ()
+  public function __construct ($rpc, $ns)
   {
-    global $rpcHost, $rpcPort, $rpcUser, $rpcPassword;
-    global $namePrefix;
-
-    $this->rpc = new HttpNamecoin ($rpcHost, $rpcPort, $rpcUser, $rpcPassword);
-    $this->ns = $namePrefix;
+    $this->rpc = $rpc;
+    $this->ns = $ns;
   }
 
   /**
-   * Close the connection.
+   * Close the connection.  This closes the RPC automatically.
    */
   public function close ()
   {

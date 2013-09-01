@@ -19,13 +19,17 @@
 
 /* Main page.  */
 
+require_once ("lib/config.inc.php");
+
 require_once ("lib/authenticator.inc.php");
 require_once ("lib/html.inc.php");
 require_once ("lib/messages.inc.php");
-require_once ("lib/namecoin_interface.inc.php");
 require_once ("lib/openid.inc.php");
 require_once ("lib/request.inc.php");
 require_once ("lib/session.inc.php");
+
+require_once ("libauth/namecoin_rpc.inc.php");
+require_once ("libauth/namecoin_interface.inc.php");
 
 require_once ("Auth/OpenID/Discover.php");
 
@@ -37,7 +41,8 @@ header("Pragma: no-cache");
 
 // Construct the basic worker classes.
 $session = new Session ();
-$nc = new NamecoinInterface ();
+$rpc = new HttpNamecoin ($rpcHost, $rpcPort, $rpcUser, $rpcPassword);
+$nc = new NamecoinInterface ($rpc, $namePrefix);
 $req = new RequestHandler ();
 $openid = new OpenID ($session, $nc);
 $html = new HtmlOutput ();
