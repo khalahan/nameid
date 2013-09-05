@@ -4,5 +4,3 @@
 * Allow setting sreg data directly with special field in value.
 
 * Logo for the webpage.
-
-* Separate off login code further and write HOWTO for stand-alone servers.

@@ -153,6 +153,19 @@ set up <b>your own server</b> if you like the idea!</p>
 </div>
 
 <div class="well well-small">
+  <p class="faq">How can I use NameID in my own project?</p>
+  <p>As mentioned in multiple other answers on this page, <b>NameID</b> is
+free software and the code can be obtained from
+<a href="https://gitorious.org/nameid/">Gitorious</a>.  You can use this
+code more or less directly to set up a &quot;clone&quot; of <b>NameID</b>
+on <b>your own server</b>.  Alternatively, you can even use the
+<b>authentication code</b> to implement Namecoin login
+<b>directly into your webservice</b> without the need to go through
+<b>NameID</b> or any other third-party!  See <code>README.libauth</code>
+in the sources for a how-to on this.</p>
+</div>
+
+<div class="well well-small">
   <p class="faq">Is the code signed?</p>
   <p>The source code in the
 <a href="https://gitorious.org/nameid/">Git repository</a> has tags
