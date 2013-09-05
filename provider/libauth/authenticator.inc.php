@@ -19,6 +19,25 @@
 
 /* Perform the user authentication on login requests.  */
 
+require_once ("namecoin_interface.inc.php");
+
+/**
+ * Exception to signal login failure.
+ */
+class LoginFailure extends RuntimeException
+{
+
+  /**
+   * Construct with the given message.
+   * @param msg The error message.
+   */
+  public function __construct ($msg)
+  {
+    parent::__construct ("Login failed: $msg");
+  }
+
+}
+
 /**
  * Check user login signatures.
  */
@@ -27,46 +46,47 @@ class Authenticator
 
   /** Namecoind connection we have.  */
   private $nc;
-  /** Session handler to use for the nonce.  */
-  private $session;
+  /** The server's URI for which login messages should be formulated.  */
+  private $serverUri;
 
   /**
-   * Construct.
+   * Construct with the given namecoin interface.
    * @param nc The namecoind connection to use.
-   * @param session The session handler to use.
+   * @param uri Server's URI for which login messages should be.
    */
-  public function __construct (NamecoinInterface $nc, Session $session)
+  public function __construct (NamecoinInterface $nc, $uri)
   {
     $this->nc = $nc;
-    $this->session = $session;
+    $this->serverUri = $uri;
   }
 
   /**
-   * Try to log a user in with the given data.
+   * Try to log a user in with the given data.  This method throws if the
+   * login fails and succeeds (plus TRUE return value) if the user
+   * is indeed authenticated.
    * @param id The user's id.
    * @param signature The user's signature.
+   * @param nonce The login nonce for the current session.
+   * @return True if the login is ok.
+   * @throws LoginFailure if the login is not ok.
    */
-  public function login ($id, $signature)
+  public function login ($id, $signature, $nonce)
   {
-    global $namePrefix;
-
-    $nonce = $this->session->getNonce ();
-    assert ($nonce !== NULL);
     $msg = $this->getChallenge ($id, $nonce);
 
     try
       {
         $res = $this->nc->verifyMessage ($id, $msg, $signature);
         if (!$res)
-          throw new UIError ("The signature is invalid.");
+          throw new LoginFailure ("The signature is invalid.");
       }
     catch (NameNotFoundException $exc)
       {
-        throw new UIError ("The identity $namePrefix/$id is not registered.");
+        $prefix = $this->nc->getNamespace ();
+        throw new LoginFailure ("The identity $prefix/$id does not exist.");
       }
 
-    /* If no exception was thrown until here, the login was successful.  */
-    $this->session->setUser ($id);
+    return TRUE;
   }
 
   /**
@@ -77,12 +97,12 @@ class Authenticator
    */
   private function getChallenge ($id, $nonce)
   {
-    global $namePrefix, $serverUri;
-
     /* This must of course be in sync with the JavaScript
        code on the loginForm page!  */
 
-    $fullId = "$serverUri?name=" . urlencode ($id);
+    $prefix = $this->nc->getNamespace ();
+    $fullId = "{$this->serverUri}?name=" . urlencode ($id);
+
     return "login $fullId $nonce";
   }
 

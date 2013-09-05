@@ -142,6 +142,15 @@ class NamecoinInterface
     return ($res === TRUE);
   }
 
+  /**
+   * Get the current namespace.
+   * @return Namespace (prefix) used.
+   */
+  public function getNamespace ()
+  {
+    return $this->ns;
+  }
+
 }
 
 ?>

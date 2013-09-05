@@ -21,13 +21,13 @@
 
 require_once ("lib/config.inc.php");
 
-require_once ("lib/authenticator.inc.php");
 require_once ("lib/html.inc.php");
 require_once ("lib/messages.inc.php");
 require_once ("lib/openid.inc.php");
 require_once ("lib/request.inc.php");
 require_once ("lib/session.inc.php");
 
+require_once ("libauth/authenticator.inc.php");
 require_once ("libauth/namecoin_rpc.inc.php");
 require_once ("libauth/namecoin_interface.inc.php");
 
@@ -141,6 +141,7 @@ function tryAction ()
 {
   global $req, $session, $msg, $nc, $openid;
   global $status;
+  global $serverUri;
 
   if ($status === "unknown" && $req->check ("action"))
     {
@@ -164,8 +165,18 @@ function tryAction ()
              below (i. e., authentication fails).  */
           $status = "loginForm";
 
-          $auth = new Authenticator ($nc, $session);
-          $auth->login ($identity, $signature);
+          $auth = new Authenticator ($nc, $serverUri);
+          try
+            {
+              $res = $auth->login ($identity, $signature,
+                                   $session->getNonce ());
+              assert ($res === TRUE);
+              $session->setUser ($identity);
+            }
+          catch (LoginFailure $err)
+            {
+              throw new UIError ($err->getMessage ());
+            }
 
           /* No exception thrown means success.  */
           $msg->addMessage ("You have logged in successfully.");
