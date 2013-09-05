@@ -1,0 +1,120 @@
+NameID libauth
+==============
+
+The authentication component (including its RPC interface to namecoind) of
+NameID can be used separately from the rest.  This is a deliberate choice
+in order to allow site owners to include Namecoin login into their projects
+directly--without the need to go through OpenID or to use nameid.org (or
+another such site) as intermediate party for logins.  Only this enables
+truly independent and trust-free logins.
+
+Login Protocol
+--------------
+
+The "protocol" used for NameID logins is very simple:  The server generates
+a "nonce" value, which is just a random string, to prevent replay-attacks.
+In NameID, the nonce is stored with the client's session.  In order to prove
+ownership of a claimed identity at login, the client has to sign a challenge
+message with the Namecoin address holding the identity's name.  The format
+of the challenge message is (without the indentation whitespace):
+
+  login FULL-ID NONCE
+
+where NONCE is the nonce value the server told it, and FULL-ID is the
+full identity URI that is also used as OpenID with NameID.  It is
+
+  SERVER-URI?name=IDENTITY
+
+where SERVER-URI is the service's URI in the case of NameID (but can be
+chosen in principle arbitrarily for your service, see below) and
+IDENTITY is the identity name without the leading "id" namespace prefix.
+(In fact, other prefixes than "id" are also possible--this can be
+configured, see below.)
+
+Client Side
+-----------
+
+You must write out a login form (or something like that) which tells
+the client its nonce and gets back the client's claimed identity
+as well as the challenge message signature.  It is up to your
+application to handle how this communication is done, but if you
+follow the practices outlined below, the NameID add-on can recognize
+your login form and allow clients to easily perform the signature.
+You can also take a look at the NameID login form code to see how
+this is done in NameID itself--the code is located at pages/loginForm.php.
+
+You need to define two elements with DOM ID's "nameid-nonce" and "nameid-uri",
+which contain the nonce and server URI as text node, respectively.  In the
+case of NameID, those are <span> elements, but it doesn't matter.  They
+are necessary to tell the add-on how to construct the challenge message.
+
+Furthermore, the actual <form> element must have the ID "loginForm".  The
+add-on only activates itself if it finds all three ID's ("nameid-nonce",
+"nameid-uri" and "loginForm").  It also binds to the form's "submit"
+event to perform the message signature.
+
+Finally, the form element (a <input> most probably) containing the
+user's identity must have the ID "identity", which is used by the add-on
+to find out which identity is requested.  It stores the signed message
+into the element with ID "signature", which is a <textarea>.
+
+If the add-on activates on a page, it sets the document element's DOM class
+to "withAddon".  This is used by NameID to selectively hide the signature
+field with CSS if the add-on is there.
+
+Server Side
+-----------
+
+For the server side of your application, the files provided in libauth can
+be used to check authentication.  They are self-contained and don't need any
+other files from NameID.  Generation of the nonce (see lib/session.inc.php
+and in particular Session::generateNonce for how NameID does it) must be
+implemented by you however you like to do it, and also sending the nonce and
+retrieving the login data back from the client is out of the scope of libauth.
+For checking received authentication data, you can use code according to
+the following overview:
+
+  require_once ("libauth/authenticator.inc.php");
+  require_once ("libauth/namecoin_interface.inc.php");
+  require_once ("libauth/namecoin_rpc.inc.php");
+
+  $rpc = new HttpNamecoin (RPC-HOST, RPC-PORT, RPC-USER, RPC-PASSWORD);
+  $nc = new NamecoinInterface ($rpc, NAMESPACE-PREFIX);
+
+  $auth = new Authenticator ($nc, SERVER-URI);
+  try
+    {
+      $res = $auth->login (CLAIMED-IDENTITY, SIGNATURE, NONCE);
+      assert ($res === TRUE);
+
+      /* Authentication succeeded, log the user into your system.  */
+    }
+  catch (LoginFailure $err)
+    {
+      /* Authentication failed, abort the login process.  You may want to
+         show $err->getMessage () to the user to tell them more details.  */
+    }
+
+  $nc->close ();
+
+This code can be found in NameID's index.php.  The values RPC-* denote the
+connection settings to the Namecoin JSON-RPC server that should be used
+for Namecoin operations (usually, "localhost" at port 8336 with
+username/password according to the namecoin.conf file).  NAMESPACE-PREFIX
+is the namespace to be used for identities, which should probably be "id".
+SERVER-URI is a unique identifier for your service, and can for instance
+be your service's URI.  It is "https://nameid.org/" in case of NameID.
+Finally, CLAIMED-IDENTITY is the user's claimed identity as which he/she
+tries to log in (without the "id" prefix, just like "domob" for the Namecoin
+identity "id/domob"), SIGNATURE the challenge message signature by your user,
+and NONCE the user's login nonce as stored by you for the current session.
+
+The Authenticator::login method throws LoginFailure (or a RpcException)
+in case of failure to authenticate (or if the Namecoin communication fails)
+and returns TRUE without exceptions in case the authentication is
+successful.
+
+Note that libauth also provides code to communicate with Namecoin not via
+the HTTP JSON-RPC interface but by executing the "namecoind" binary, in
+which case the class HttpNamecoin above should be replaced by Namecoind.
+This is not recommended, though, and the Namecoind code is no longer maintained.
