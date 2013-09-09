@@ -144,7 +144,7 @@ want to earn any money from it.  Furthermore, <b>NameID</b> is also
 <a href="https://gitorious.org/nameid/">source code</a>
 available to anyone who wants to check it out or even reuse it for
 own projects under the
-<a href="https://www.gnu.org/licenses/gpl.html"><b>GPL v3</b></a>.</p>
+<a href="https://www.gnu.org/licenses/agpl-3.0.html"><b>AGPL v3</b></a>.</p>
   <p>For the first question, you have to decide on your own whether or
 not you trust me based on the information on this page.  In any case you can
 also just
