@@ -178,10 +178,9 @@ verify the tags against my key.</p>
 
 <div class="well well-small">
   <p class="faq">Does NameID have a .bit domain?</p>
-  <p>In theory yes, I registered both
-<a href="http://nameid.bit/">nameid.bit</a> and
-<a href="http://myid.bit/">myid.bit</a> for it.  So far I haven't yet
-configured them, though, but this will come in the future.  Note however that
+  <p>Yes, you can use both
+<a href="https://nameid.bit/">nameid.bit</a> and
+<a href="https://myid.bit/">myid.bit</a>.  Note however that
 you have to use <code>https://nameid.<b>org</b>/</code> for signing into
 OpenID sites anyway, because otherwise it will most probably fail when the
 consumer site tries to connect to <b>NameID</b> on its own in order to
