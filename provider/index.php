@@ -1,7 +1,7 @@
 <?php
 /*
     NameID, a namecoin based OpenID identity provider.
-    Copyright (C) 2013 by Daniel Kraft <d@domob.eu>
+    Copyright (C) 2013-2014 by Daniel Kraft <d@domob.eu>
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU Affero General Public License as published by
@@ -392,14 +392,14 @@ include ("pages/$status.php");
 
   <hr />
 
-  <p class="text-center">Copyright &copy; 2013
+  <p class="text-center">Copyright &copy; 2013&ndash;2014
 by <a href="http://www.domob.eu/">Daniel Kraft</a>.
 <b>NameID</b> is free software under the terms of the
 <a href="https://www.gnu.org/licenses/agpl-3.0.html">AGPL v3</a>,
 check out the <a href="https://gitorious.org/nameid/">source code</a>!</p>
 
   <p class="text-center">BTC: 1<b>Nameid</b>3brhZrbTN1M7t6afMAfVBiGioJT
-| NMC: NFUJUGVzjTuef8bX7dd3BfXekfu8cdzkuH</p>
+| NMC: ND6yWYKZS9NnMPnfN6C6yZHG8gRe3r69GR</p>
 
 </body>
 </html>
