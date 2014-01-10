@@ -1,7 +1,7 @@
 <?php
 /*
     NameID, a namecoin based OpenID identity provider.
-    Copyright (C) 2013 by Daniel Kraft <d@domob.eu>
+    Copyright (C) 2013-2014 by Daniel Kraft <d@domob.eu>
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU Affero General Public License as published by
@@ -27,11 +27,12 @@ if (!isset ($fromIndex) || $fromIndex !== "yes")
 <h1>Contact Details</h1>
 
 <p>If you want to contact me, just take a look at my own
-<a href="?name=daniel"><b>profile page</b></a>.  Encrypted emails
+<a href="?name=domob"><b>profile page</b></a>.  Encrypted emails
 or <a href="https://bitmessage.org/">Bitmessage</a> are explicitly
 welcome.  If you want to be sure about the keys, you can also
 check out the data yourself in the Namecoin blockchain
-with my identity <code>id/daniel</code> or <code>id/domob</code>.</p>
+with my identity
+<a href="?name=domob"><code>id/domob</code></a>.</p>
 
 <p><b>NameID</b> is a project I run purely for the sake of bringing
 Namecoin identities to a wider usage, I don't have any
