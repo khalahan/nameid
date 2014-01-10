@@ -1,7 +1,7 @@
 <?php
 /*
     NameID, a namecoin based OpenID identity provider.
-    Copyright (C) 2013 by Daniel Kraft <d@domob.eu>
+    Copyright (C) 2013-2014 by Daniel Kraft <d@domob.eu>
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU Affero General Public License as published by
@@ -31,7 +31,7 @@ experiment, so <b>use at your own risk</b>!
 The <a href="?view=faq">FAQs</a> have some more information.  If you
 want to help out, please <a href="?view=contact">contact me</a>!</div>
 
-<p><a href="https://dot-bit.org/"><b>Namecoin</b></a>
+<p><a href="https://namecoin.org/"><b>Namecoin</b></a>
 is an amazing technology that allows anyone to register arbitrary
 <b>human-readable</b> names in a <b>completely decentralised</b>
 but <b>nevertheless secure</b> fashion.
@@ -40,7 +40,7 @@ but <b>nevertheless secure</b> fashion.
 triangle</b></a>?  It can be argued that Namecoin is
 a prime <b>counter-example</b> to it.)
 These names can be used
-to create <a href="https://dot-bit.org/Namespace:Identity"><b>online
+to create <a href="https://wiki.namecoin.org/Namespace:Identity"><b>online
 identities</b></a>.
 <i>With NameID, you can instantly turn your Namecoin identity
 into an <a href="https://openid.net/">OpenID</a>,
@@ -50,7 +50,7 @@ Check out the <a href="?view=faq"><b>FAQs</b></a> to learn more.</p>
 <p>Already have a Namecoin identity?  Then
 <a href="?view=login"><b>log in</b></a>!
 Alternatively if you want to check out some other Namecoin identities,
-take a look at <a href="?name=daniel">mine</a> or query for an arbitrary
+take a look at <a href="?name=domob">mine</a> or query for an arbitrary
 name:</p>
 <form method="get" action="?" class="offset1">
   <div class="input-prepend input-append">
