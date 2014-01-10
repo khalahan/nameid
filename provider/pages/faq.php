@@ -1,7 +1,7 @@
 <?php
 /*
     NameID, a namecoin based OpenID identity provider.
-    Copyright (C) 2013 by Daniel Kraft <d@domob.eu>
+    Copyright (C) 2013-2014 by Daniel Kraft <d@domob.eu>
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU Affero General Public License as published by
@@ -28,7 +28,7 @@ if (!isset ($fromIndex) || $fromIndex !== "yes")
 
 <div class="well well-small">
   <p class="faq">What is Namecoin?</p>
-  <p><a href="https://dot-bit.org/">Namecoin</a> is a peer-to-peer, completely
+  <p><a href="https://namecoin.org/">Namecoin</a> is a peer-to-peer, completely
 decentralised system based on <a href="https://www.bitcoin.org/">Bitcoin</a>
 technology that allows everyone to register <i>names</i>.  After you own
 a name, no-one can take it from you without your consent, and you can associate
@@ -40,10 +40,11 @@ be forged nor censored by unauthorised attackers.</p>
   <p class="faq">How do Namecoin identities work?</p>
   <p>In the Namecoin system, there are multiple possible uses for names:  The
 most common today is for
-<a href="https://dot-bit.org/Namespace:Domain_names"><b>domain names</b></a>
+<a href="https://wiki.namecoin.org/Namespace:Domain_names"><b>domain
+names</b></a>
 (these are names with the <code>d/</code> prefix), but another possible
 use-case is that of
-<a href="https://dot-bit.org/Namespace:Identity"><b>identities</b></a>:
+<a href="https://wiki.namecoin.org/Namespace:Identity"><b>identities</b></a>:
 Those are names of the form <code>id/your-nick</code>, and they are
 particularly interesting because you can, for instance, store your public keys
 for <a href="http://gnupg.org/">GnuPG</a>, your
@@ -104,9 +105,10 @@ OpenID consumer site, where you are then authenticated with your identity.</p>
 <div class="well well-small">
   <p class="faq">What do I need in order to use NameID?</p>
   <p>First of all, you need a 
-<a href="https://dot-bit.org/Namespace:Identity"><b>Namecoin identity</b></a>,
+<a href="https://wiki.namecoin.org/Namespace:Identity"><b>Namecoin
+identity</b></a>,
 and need the wallet that owns it on your local system.  Second, you need
-<a href="https://dot-bit.org/forum/viewtopic.php?f=2&amp;t=998"><b>Namecoin-Qt</b></a>
+<a href="https://github.com/namecoin-qt/namecoin-qt"><b>Namecoin-Qt</b></a>
 installed and running, and need to be able to perform
 <code>signmessage</code> commands with it.  Don't worry though, you can
 install the <a href="?view=addon"><b>NameID Easy Login</b></a> add-on for
@@ -117,9 +119,9 @@ sites you want to sign into.</p>
 
 <div class="well well-small">
   <p class="faq">Where do I get a Namecoin identity from?</p>
-  <p>Please consult the <a href="https://dot-bit.org/">Namecoin website</a>
+  <p>Please consult the <a href="https://namecoin.org/">Namecoin website</a>
 for more details, or take a look at the
-<a href="https://dot-bit.org/forum/">Namecoin forum</a> for help.</p>
+<a href="https://forum.namecoin.org/">Namecoin forum</a> for help.</p>
 </div>
 
 <div class="well well-small">
@@ -171,7 +173,8 @@ in the sources for a how-to on this.</p>
 <a href="https://gitorious.org/nameid/">Git repository</a> has tags
 signed by my key.  You can find the key fingerprint
 on the <a href="?view=contact">contact page</a> or look it even
-up in the blockchain for my own identity <code>id/daniel</code>.  If you
+up in the blockchain for my own identity
+<a href="?name=domob"><code>id/domob</code></a>.  If you
 want to be sure to have the correct code, please check it out there and
 verify the tags against my key.</p>
 </div>
