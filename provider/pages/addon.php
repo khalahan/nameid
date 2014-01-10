@@ -1,7 +1,7 @@
 <?php
 /*
     NameID, a namecoin based OpenID identity provider.
-    Copyright (C) 2013 by Daniel Kraft <d@domob.eu>
+    Copyright (C) 2013-2014 by Daniel Kraft <d@domob.eu>
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU Affero General Public License as published by
@@ -45,7 +45,7 @@ browsers.  Try it out:</p>
 <small>Version 0.2a</small></a></div>
 
 <p class="padTop">When the add-on is installed, you have to make sure that the
-<a href="https://dot-bit.org/forum/viewtopic.php?f=2&amp;t=998"><b>Namecoin-Qt</b></a>
+<a href="https://github.com/namecoin-qt/namecoin-qt"><b>Namecoin-Qt</b></a>
 daemon is running, and check the connection settings in the add-on's
 preferences dialog.  Those must match your <code>namecoin.conf</code>
 file.  When everything is set up, the add-on will allow you to automate
