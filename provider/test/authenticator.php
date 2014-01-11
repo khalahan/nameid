@@ -92,8 +92,7 @@ function checkValue ($val, $signerOk)
   $nc->set ($name, $addrOwner, $val);
 
   checkLogin ($sigOwner, TRUE);
-  //checkLogin ($sigSigner, $signerOk);
-  checkLogin ($sigSigner, FALSE);
+  checkLogin ($sigSigner, $signerOk);
   checkLogin ($sigOther, FALSE);
   checkLogin (base64_encode ("invalid sig"), FALSE);
 }
@@ -101,12 +100,12 @@ function checkValue ($val, $signerOk)
 /* Perform the checks.  */
 
 checkValue ("invalid-json", FALSE);
-checkValue ("{'email': 'd@domob.eu'}", FALSE);
-checkValue ("{'signer': 42}", FALSE);
-checkValue ("{'signer': '$addrSigner'}", TRUE);
-checkValue ("{'signer': []}", FALSE);
-checkValue ("{'signer': [$addrSigner]}", TRUE);
-checkValue ("{'signer': [$addrSigner, 42, 'invalid', null]}", TRUE);
+checkValue ("{\"email\": \"d@domob.eu\"}", FALSE);
+checkValue ("{\"signer\": 42}", FALSE);
+checkValue ("{\"signer\": \"$addrSigner\"}", TRUE);
+checkValue ("{\"signer\": []}", FALSE);
+checkValue ("{\"signer\": [\"$addrSigner\"]}", TRUE);
+checkValue ("{\"signer\": [\"$addrSigner\", 42, \"invalid\", null]}", TRUE);
 
 $nc->close ();
 

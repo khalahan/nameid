@@ -95,6 +95,21 @@ class Authenticator
     if ($this->nc->verifyMessage ($addr, $msg, $signature))
       return TRUE;
 
+    if ($value !== NULL && isset ($value->signer))
+      {
+        if (is_string ($value->signer))
+          $arr = array ($value->signer);
+        else if (is_array ($value->signer))
+          $arr = $value->signer;
+        else
+          $arr = array ();
+
+        foreach ($arr as $addr)
+          if ($this->nc->isValidAddress ($addr)
+              && $this->nc->verifyMessage ($addr, $msg, $signature))
+            return TRUE;
+      }
+
     throw new LoginFailure ("The signature is invalid.");
   }
 
