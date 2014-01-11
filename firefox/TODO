@@ -1,3 +1,5 @@
+* Change add-on / login form communication to explicit JS API?
+
 * Implement automatic credentials loading on Windows and OS X.
 
 * Logo plus preference dialog icons.
