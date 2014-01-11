@@ -1,6 +1,6 @@
 /*
     NameID, a namecoin based OpenID identity provider.
-    Copyright (C) 2013 by Daniel Kraft <d@domob.eu>
+    Copyright (C) 2013-2014 by Daniel Kraft <d@domob.eu>
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -169,13 +169,57 @@ NameIdAddon.prototype =
         {
           var nc = new Namecoind (this.pref);
 
-          var res = nc.executeRPC ("name_show", ["id/" + id], errHandler);
-          var addr = res.address;
+          var data = nc.executeRPC ("name_show", ["id/" + id], errHandler);
+          var addr = data.address;
           log ("Found address for name 'id/" + id + "': " + addr);
 
+          /* Try to find an address that is allowed to sign and also
+             contained in the user's wallet.  */
+
+          var myAddr = null;
+
           res = nc.executeRPC ("validateaddress", [addr]);
-          if (!res.ismine)
-            throw "You don't own the private key for 'id/" + id + "'.";
+          if (res.ismine)
+            myAddr = addr;
+          else
+            {
+              log ("Looking for signer in value:\n" + data.value);
+
+              var value;
+              try
+                {
+                  value = JSON.parse (data.value);
+                }
+              catch (exc)
+                {
+                  /* JSON parse error, assume no signers.  */
+                  value = {};
+                }
+
+              var arr;
+              if (typeof value.signer === "string")
+                arr = [value.signer];
+              else if (Array.isArray (value.signer))
+                arr = value.signer;
+              else
+                arr = [];
+                
+              for (var i = 0; i < arr.length; ++i)
+                {
+                  res = nc.executeRPC ("validateaddress", [arr[i]]);
+                  if (res.ismine)
+                    {
+                      myAddr = arr[i];
+                      log ("Found available signer: " + myAddr);
+                      break;
+                    }
+                }
+            }
+
+          if (myAddr === null)
+            throw "You are not allowed to sign for 'id/" + id + "'.";
+
+          /* Try to sign the challenge with the address found.  */
 
           res = nc.executeRPC ("getinfo", []);
           var didUnlock = false;
@@ -200,7 +244,7 @@ NameIdAddon.prototype =
               didUnlock = true;
             }
 
-          var signature = nc.executeRPC ("signmessage", [addr, msg]);
+          var signature = nc.executeRPC ("signmessage", [myAddr, msg]);
           doc.getElementById ("signature").value = signature;
           log ("Successfully provided signature.");
 

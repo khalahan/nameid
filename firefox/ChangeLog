@@ -2,6 +2,7 @@ ChangeLog for NameID Login Add-On
 =================================
 
 Version 0.3a (trunk):
+  * Implement "signer" authentication.
 
 Version 0.2a (2013-07-19):
   * Allow remembering trust/distrust decisions for sites.
