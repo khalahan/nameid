@@ -7,6 +7,7 @@ Version 0.3a (trunk):
   * Use JSON-RPC over HTTP directly rather than the namecoind binary.
   * Separate off the authentication logic so it can be used by separate
     projects.  See README.libauth.
+  * Implement "signer" authentication.
 
 Version 0.2a (2013-07-12):
   * Update login form to work with the Mozilla add-on.
