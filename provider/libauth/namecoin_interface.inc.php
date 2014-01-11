@@ -168,4 +168,58 @@ class NamecoinInterface
 
 }
 
+/**
+ * Special interface class that can be used for testing.  It is based on the
+ * ordinary interface for everything but data retrieval, and uses its own
+ * manually set map between names and data.
+ */
+class TestInterface extends NamecoinInterface
+{
+
+  /** Map between names and data objects.  */
+  private $map;
+
+  /**
+   * Construct given the namecoin RPC interface to use.
+   * @param rpc The RPC interface to use.
+   * @param ns Namecoin namespace to use for names.
+   */
+  public function __construct ($rpc, $ns)
+  {
+    parent::__construct ($rpc, $ns);
+    $this->map = array ();
+  }
+
+  /**
+   * Add or overwrite a name's test bindings.
+   * @param name The name to bind.
+   * @param addr Set the name's address to this one.
+   * @param val Set the name's value to this one.
+   */
+  public function set ($name, $addr, $val)
+  {
+    $cur = new stdClass ();
+    $cur->address = $addr;
+    $cur->value = $val;
+
+    $this->map[$name] = $cur;
+  }
+
+  /**
+   * Retrieve data for a name.  This queries the manually set internal
+   * map.  Throws in case there's no binding for the given name.
+   * @param name Name to query for.
+   * @return Data associated with the name.
+   * @throws NameNotFoundException if the name does not exist.
+   */
+  public function getIdData ($name)
+  {
+    if (!isset ($this->map[$name]))
+      throw new NameNotFoundException ($name);
+
+    return $this->map[$name];
+  }
+
+}
+
 ?>
