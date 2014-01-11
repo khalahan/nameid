@@ -51,6 +51,17 @@ assert (!$res);
 $res = $nc->verifyMessage ($addr, $msg, base64_encode ("forged sig"));
 assert (!$res);
 
+$res = $nc->isValidAddress ($addr);
+assert ($res);
+$res = $nc->isValidAddress (array (5));
+assert (!$res);
+$res = $nc->isValidAddress ("");
+assert (!$res);
+$res = $nc->isValidAddress (NULL);
+assert (!$res);
+$res = $nc->isValidAddress ("invalid-address");
+assert (!$res);
+
 $nc->close ();
 
 ?>
