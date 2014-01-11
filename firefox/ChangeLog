@@ -1,7 +1,7 @@
 ChangeLog for NameID Login Add-On
 =================================
 
-Version 0.3a (trunk):
+Version 0.3a (2014-01-11):
   * Implement "signer" authentication.
 
 Version 0.2a (2013-07-19):
