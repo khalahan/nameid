@@ -1,6 +1,3 @@
-* Allow different signing key (address / GnuPG), where the public key is
-  associated somehow to the id-name value.
-
 * Allow setting sreg data directly with special field in value.
 
 * Logo for the webpage.
