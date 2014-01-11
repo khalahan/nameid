@@ -40,6 +40,11 @@ catch (NameNotFoundException $exc)
   }
 assert ($thrown);
 
+$val = $nc->getIdValue ("domob");
+assert (isset ($val->email) && $val->email === "d@domob.eu");
+$val = $nc->getIdValue ("invalid-json");
+assert ($val === NULL);
+
 $msg = "My test message to be signed!\nAnother line.";
 $sig = "HCpqMVqWfYuT0WJ8WXyLhMXF5lnZ0DwphVcV0rr8bCNxONddYJtINIs5I8Bd"
        ."Mqrk4wKaGQTK8035q+IMW3JVP0g=";
