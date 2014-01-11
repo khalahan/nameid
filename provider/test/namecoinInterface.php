@@ -2,7 +2,7 @@
 <?php
 /*
     NameID, a namecoin based OpenID identity provider.
-    Copyright (C) 2013 by Daniel Kraft <d@domob.eu>
+    Copyright (C) 2013-2014 by Daniel Kraft <d@domob.eu>
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU Affero General Public License as published by
@@ -43,11 +43,12 @@ assert ($thrown);
 $msg = "My test message to be signed!\nAnother line.";
 $sig = "HCpqMVqWfYuT0WJ8WXyLhMXF5lnZ0DwphVcV0rr8bCNxONddYJtINIs5I8Bd"
        ."Mqrk4wKaGQTK8035q+IMW3JVP0g=";
-$res = $nc->verifyMessage ("domob", $msg, $sig);
+$addr = "NFppu8bRjGVYTjyVrFZE9cGmjvzD6VUo5m";
+$res = $nc->verifyMessage ($addr, $msg, $sig);
 assert ($res);
-$res = $nc->verifyMessage ("domob", "forged message", $sig);
+$res = $nc->verifyMessage ($addr, "forged message", $sig);
 assert (!$res);
-$res = $nc->verifyMessage ("domob", $msg, base64_encode ("forged sig"));
+$res = $nc->verifyMessage ($addr, $msg, base64_encode ("forged sig"));
 assert (!$res);
 
 $nc->close ();
