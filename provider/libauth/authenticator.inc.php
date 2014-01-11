@@ -91,11 +91,11 @@ class Authenticator
       }
 
     /* Perform actual value checks.  */
-    $res = $this->nc->verifyMessage ($addr, $msg, $signature);
-    if (!$res)
-      throw new LoginFailure ("The signature is invalid.");
 
-    return TRUE;
+    if ($this->nc->verifyMessage ($addr, $msg, $signature))
+      return TRUE;
+
+    throw new LoginFailure ("The signature is invalid.");
   }
 
   /**

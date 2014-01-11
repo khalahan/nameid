@@ -75,6 +75,22 @@ class NamecoinInterface
   }
 
   /**
+   * Check if the argument is a valid address.
+   * @param str Object to check.
+   * @return True iff str is a string and a valid address.
+   */
+  public function isValidAddress ($str)
+  {
+    if (!is_string ($str))
+      return FALSE;
+
+    $res = $this->rpc->executeRPC ("validateaddress", array ($str));
+    assert (isset ($res->isvalid));
+
+    return $res->isvalid;
+  }
+
+  /**
    * Get all data associated with an id as object.  In case the namecoind call
    * fails or the name is not found, NameNotFound is thrown.
    * @param name The name to look up.
