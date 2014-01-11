@@ -1,7 +1,7 @@
 <?php
 /*
     NameID, a namecoin based OpenID identity provider.
-    Copyright (C) 2013 by Daniel Kraft <d@domob.eu>
+    Copyright (C) 2013-2014 by Daniel Kraft <d@domob.eu>
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU Affero General Public License as published by
@@ -74,17 +74,26 @@ class Authenticator
   {
     $msg = $this->getChallenge ($id, $nonce);
 
+    /* Get data for the name first.  This is then used to check against all
+       allowable signer addresses.  */
     try
       {
-        $res = $this->nc->verifyMessage ($id, $msg, $signature);
-        if (!$res)
-          throw new LoginFailure ("The signature is invalid.");
+        $data = $this->nc->getIdData ($id);
+        assert (isset ($data->address));
+        $addr = $data->address;
+        
+        $value = $this->nc->getIdValue ($id);
       }
     catch (NameNotFoundException $exc)
       {
         $prefix = $this->nc->getNamespace ();
         throw new LoginFailure ("The identity $prefix/$id does not exist.");
       }
+
+    /* Perform actual value checks.  */
+    $res = $this->nc->verifyMessage ($addr, $msg, $signature);
+    if (!$res)
+      throw new LoginFailure ("The signature is invalid.");
 
     return TRUE;
   }

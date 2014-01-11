@@ -1,7 +1,7 @@
 <?php
 /*
     NameID, a namecoin based OpenID identity provider.
-    Copyright (C) 2013 by Daniel Kraft <d@domob.eu>
+    Copyright (C) 2013-2014 by Daniel Kraft <d@domob.eu>
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU Affero General Public License as published by
@@ -76,9 +76,11 @@ class NamecoinInterface
 
   /**
    * Get all data associated with an id as object.  In case the namecoind call
-   * fails or the name is not found
+   * fails or the name is not found, NameNotFound is thrown.
    * @param name The name to look up.
    * @return Associated data as object corresponding to the JSON data.
+   * @throws NameNotFoundException if the name does not exist.
+   * @throws JsonRpcError in case of another exception.
    */
   public function getIdData ($name)
   {
@@ -100,7 +102,8 @@ class NamecoinInterface
   }
 
   /**
-   * Returns value associated to a name.
+   * Returns value associated to a name.  Returns NULL in case of invalid
+   * JSON data associated with the name.
    * @param name The name to look up.
    * @return The value associated to it as JSON object.
    */
@@ -113,23 +116,19 @@ class NamecoinInterface
   }
 
   /**
-   * Verify a signed message for a name.  This first queries for the address
-   * associated with a name, and then verifies the message.
-   * @param name The name in question.
+   * Verify a signed message for an address.
+   * @param addr The address in question.
    * @param msg The signed message.
    * @param sig The message signature.
    * @return True or false, depending on the message validity.
    */
-  public function verifyMessage ($name, $msg, $sig)
+  public function verifyMessage ($addr, $msg, $sig)
   {
-    $data = $this->getIdData ($name);
-    assert (isset ($data->address));
-
     /* Catch the error for invalid base64 in the signature, which can easily
        be triggered by the user.  Report it simply as invalid.  */
     try
       {
-        $args = array ($data->address, $sig, $msg);
+        $args = array ($addr, $sig, $msg);
         $res = $this->rpc->executeRPC ("verifymessage", $args);
       }
     catch (JsonRpcError $exc)
