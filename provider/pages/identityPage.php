@@ -1,7 +1,7 @@
 <?php
 /*
     NameID, a namecoin based OpenID identity provider.
-    Copyright (C) 2013 by Daniel Kraft <d@domob.eu>
+    Copyright (C) 2013-2014 by Daniel Kraft <d@domob.eu>
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU Affero General Public License as published by
@@ -52,26 +52,27 @@ public profile information registered:</p>
       {
         if (isset ($identityPage->$key))
           {
-            echo "<dt>" . $html->escape ($label) . "</dt>\n";
-            echo "<dd>";
+            $content = NULL;
             switch ($key)
               {
               case "website":
-                $href = $identityPage->$key;
+                $text = $html->escape ($identityPage->$key);
+                $content = "<a href='$text'>$text</a>";
                 break;
               case "email":
-                $href = "mailto:" . $identityPage->$key;
+                $text = $html->escape ($identityPage->$key);
+                $content = "<a href='mailto:$text'>$text</a>";
                 break;
               default:
-                $href = NULL;
+                $content = $html->escape ($identityPage->$key);
                 break;
               }
-            if ($href)
-              echo "<a href='" . $html->escape ($href) . "'>";
-            echo $html->escape ($identityPage->$key);
-            if ($href)
-              echo "</a>";
-            echo "</dd>\n";
+
+            if ($content !== NULL)
+              {
+                echo "<dt>" . $html->escape ($label) . "</dt>\n";
+                echo "<dd>$content</dd>\n";
+              }
           }
       }
     echo "</dl>\n";
