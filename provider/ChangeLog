@@ -2,6 +2,9 @@ ChangeLog for NameID Identity Provider
 ======================================
 
 Version 0.4a (trunk):
+  * Sanitise links displayed on identity page to prevent malicious
+    inserts of 'javascript:' links.
+  * Handle GPG fingerprints and display them on identity pages.
 
 Version 0.3a (2014-01-11):
   * Added 'version' field to sign-in form that can be used in the future
