@@ -190,6 +190,9 @@ you have to use <code>https://nameid.<b>org</b>/</code> for signing into
 OpenID sites anyway, because otherwise it will most probably fail when the
 consumer site tries to connect to <b>NameID</b> on its own in order to
 verify your request.</p>
+  <p>I'm grateful to <a href="http://www.cassini.tv/">cassini</a>, who
+donated the premium name <a href="https://id.bit/">id.bit</a> to
+this project!</p>
 </div>
 
 <div class="well well-small">
